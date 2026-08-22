@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CinePick | Find Your Next Flick</title>
   <style>
-    /* Exact Palette from Image */
+    /* Color Palette */
     :root {
       --navy: #2F4156;
       --teal: #567C8D;
@@ -65,7 +65,7 @@
       display: block;
     }
 
-    /* Bubble Options Grid */
+    /* 8 Bubble Options Layout */
     .bubble-container {
       display: flex;
       flex-wrap: wrap;
@@ -117,7 +117,7 @@
       100% { transform: translateY(-10px); }
     }
 
-    /* Shuffle View */
+    /* Shuffle Screen */
     .shuffle-box {
       font-size: 1.6rem;
       font-weight: bold;
@@ -221,13 +221,13 @@
       </div>
     </div>
 
-    <!-- Step 2: Shuffle Animation -->
+    <!-- Step 2: Shuffle Screen -->
     <div id="step-shuffle" class="screen">
       <h2 style="color: var(--navy);">Shuffling titles...</h2>
       <div id="shuffle-box" class="shuffle-box shuffling">???</div>
     </div>
 
-    <!-- Step 3: Result Details -->
+    <!-- Step 3: Result Card -->
     <div id="step-result" class="screen">
       <div class="result-card">
         <h2 id="movie-title">Movie Title</h2>
@@ -275,8 +275,8 @@
       ],
       "Sci-Fi": [
         { title: "Interstellar", year: "2014", rating: "⭐️ 8.7", desc: "A team of ex-NASA pilots travel through a wormhole to find a habitable planet for humanity.", watch: "Paramount+ / Prime Video" },
-        { title: "Blade Runner 2049", year: "2017", rating: "⭐️ 8.0", desc: "A officer unearths a long-buried secret that leads him to search for missing Blade Runner Rick Deckard.", watch: "Hulu / Apple TV" },
-        { title: "Arrival", year: "2016", rating: "⭐️ 7.9", desc: "A expert linguist works with the military to communicate with extraterrestrial visitors.", watch: "Paramount+ / Prime Video" }
+        { title: "Blade Runner 2049", year: "2017", rating: "⭐️ 8.0", desc: "An officer unearths a long-buried secret that leads him to search for missing Blade Runner Rick Deckard.", watch: "Hulu / Apple TV" },
+        { title: "Arrival", year: "2016", rating: "⭐️ 7.9", desc: "An expert linguist works with the military to communicate with extraterrestrial visitors.", watch: "Paramount+ / Prime Video" }
       ],
       "Thriller": [
         { title: "Knives Out", year: "2019", rating: "⭐️ 7.9", desc: "A suave detective investigates the suspicious death of a wealthy, eccentric mystery author.", watch: "Prime Video / Apple TV" },
