@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinePick | For Indecisive Cinephiles</title>
+  <style>
+    /* Global Styles */
+    :root {
+      --bg-color: #0d0f12;
+      --card-bg: #1a1d24;
+      --accent: #e50914;
+      --accent-hover: #f40612;
+      --text: #ffffff;
+      --text-muted: #a0a5b5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    /* Screen Management */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* Genre Buttons Grid */
+    .genre-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .genre-btn {
+      background: #252932;
+      color: var(--text);
+      border: 2px solid transparent;
+      padding: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .genre-btn:hover {
+      border-color: var(--accent);
+      background: #2f3440;
+    }
+
+    /* Shuffle View */
+    .shuffle-box {
+      font-size: 1.8rem;
+      font-weight: bold;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed var(--accent);
+      border-radius: 8px;
+      margin: 20px 0;
+      padding: 10px;
+    }
+
+    .shuffling {
+      animation: pulse 0.1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1.02); }
+    }
+
+    /* Movie Result Card */
+    .movie-card {
+      text-align: left;
+    }
+
+    .movie-card h2 {
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+
+    .movie-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    .movie-desc {
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: #d1d5db;
+    }
+
+    .watch-info {
+      background: #252932;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    .watch-info strong {
+      color: #fff;
+    }
+
+    /* Primary Control Buttons */
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🎬 CinePick</h1>
+    <p>Can't decide what to watch? Let the shuffle decide.</p>
+  </header>
+
+  <div class="container">
+    <!-- STEP 1: Select Genre -->
+    <div id="step-genre" class="screen active">
+      <h3>Select a Genre:</h3>
+      <div class="genre-grid">
+        <button class="genre-btn" onclick="selectGenre('Romcom')">💕 RomCom</button>
+        <button class="genre-btn" onclick="selectGenre('Sci-Fi')">🚀 Sci-Fi</button>
+        <button class="genre-btn" onclick="selectGenre('Thriller')">🔪 Thriller</button>
+        <button class="genre-btn" onclick="selectGenre('Drama')">🎭 Drama</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Shuffling Animation -->
+    <div id="step-shuffle" class="screen">
+      <p id="shuffle-heading">Shuffling movies...</p>
+      <div id="shuffle-box" class="shuffle-box shuffling">???</div>
+    </div>
+
+    <!-- STEP 3: Result Details -->
+    <div id="step-result" class="screen">
+      <div class="movie-card">
+        <h2 id="movie-title">Movie Title</h2>
+        <div class="movie-meta" id="movie-meta">Year | Rating</div>
+        <p class="movie-desc" id="movie-desc">Plot description will appear here...</p>
+        <div class="watch-info">
+          📺 <strong>Where to Watch:</strong> <span id="movie-platform">Platform</span>
+        </div>
+        <button class="btn" onclick="resetApp()">Pick Another Genre</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample Movie Database
+    const movieData = {
+      "Romcom": [
+        { title: "When Harry Met Sally...", year: "1989", rating: "⭐️ 7.7", desc: "Harry and Sally are two friends who strive to stay in a platonic relationship while navigating adult life and romance in NYC.", watch: "Rent on Apple TV / Prime Video" },
+        { title: "Crazy Rich Asians", year: "2018", rating: "⭐️ 6.9", desc: "A native New Yorker travels to Singapore to meet her boyfriend's family, only to discover they are extremely wealthy.", watch: "Netflix / HBO Max" },
+        { title: "Palm Springs", year: "2020", rating: "⭐️ 7.4", desc: "Two wedding guests get stuck in a recursive time loop while attending a celebration in California.", watch: "Hulu / Prime Video" }
+      ],
+      "Sci-Fi": [
+        { title: "Interstellar", year: "2014", rating: "⭐️ 8.7", desc: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.", watch: "Paramount+ / Prime Video" },
+        { title: "Blade Runner 2049", year: "2017", rating: "⭐️ 8.0", desc: "A young Blade Runner's discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard.", watch: "Hulu / Apple TV" }
+      ],
+      "Thriller": [
+        { title: "Knives Out", year: "2019", rating: "⭐️ 7.9", desc: "A detective investigates the death of a patriarch of an eccentric, combative family.", watch: "Prime Video" },
+        { title: "Prisoners", year: "2013", rating: "⭐️ 8.1", desc: "When Keller Dover's daughter and her friend go missing, he takes matters into his own hands as the police pursue multiple leads.", watch: "Netflix" }
+      ],
+      "Drama": [
+        { title: "The Shawshank Redemption", year: "1994", rating: "⭐️ 9.3", desc: "Over the course of several years, two convicts form a friendship, seeking solace and eventual redemption through basic compassion.", watch: "HBO Max" },
+        { title: "Whiplash", year: "2014", rating: "⭐️ 8.5", desc: "A promising young drummer enlists at a cut-throat music conservatory where his instructor will stop at nothing to realize a student's potential.", watch: "Hulu / Netflix" }
+      ]
+    };
+
+    let selectedMovie = null;
+
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+    }
+
+    function selectGenre(genre) {
+      showScreen('step-shuffle');
+      const movies = movieData[genre];
+      const shuffleBox = document.getElementById('shuffle-box');
+      
+      let counter = 0;
+      const interval = setInterval(() => {
+        const randomTemp = movies[Math.floor(Math.random() * movies.length)];
+        shuffleBox.innerText = randomTemp.title;
+        counter++;
+
+        if (counter > 18) { // Stop after ~2 seconds
+          clearInterval(interval);
+          selectedMovie = movies[Math.floor(Math.random() * movies.length)];
+          shuffleBox.innerText = selectedMovie.title;
+          
+          setTimeout(() => {
+            displayMovie(selectedMovie);
+          }, 800);
+        }
+      }, 100);
+    }
+
+    function displayMovie(movie) {
+      document.getElementById('movie-title').innerText = movie.title;
+      document.getElementById('movie-meta').innerText = `${movie.year} • ${movie.rating}`;
+      document.getElementById('movie-desc').innerText = movie.desc;
+      document.getElementById('movie-platform').innerText = movie.watch;
+      showScreen('step-result');
+    }
+
+    function resetApp() {
+      showScreen('step-genre');
+    }
+  </script>
+</body>
+</html>
