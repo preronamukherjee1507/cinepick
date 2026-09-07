@@ -3,35 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Select Genre</title>
+  <title>CinePick</title>
   <link rel="stylesheet" href="style.css" />
   <!-- Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-  <!-- Rotated Background -->
-  <div class="bg-rotated"></div>
-
-  <!-- Dark Overlay -->
-  <div class="overlay"></div>
-
-  <!-- Genre Selection UI -->
   <main class="content-container">
-    <h1>Select a Genre</h1>
+    <h1>CinePick</h1>
     
+    <!-- Grid featuring all 8 requested genres -->
     <div class="genre-grid">
-      <button class="genre-card" onclick="pickMovie('romance')">Romance</button>
+      <button class="genre-card" onclick="pickMovie('action')">Action</button>
       <button class="genre-card" onclick="pickMovie('comedy')">Comedy</button>
-      <button class="genre-card" onclick="pickMovie('true_crime')">True Crime</button>
-      <button class="genre-card" onclick="pickMovie('fantasy')">Fantasy</button>
+      <button class="genre-card" onclick="pickMovie('crime')">Crime</button>
+      <button class="genre-card" onclick="pickMovie('drama')">Drama</button>
+      <button class="genre-card" onclick="pickMovie('horror')">Horror</button>
+      <button class="genre-card" onclick="pickMovie('romcom')">RomCom</button>
+      <button class="genre-card" onclick="pickMovie('scifi')">Sci-Fi</button>
+      <button class="genre-card" onclick="pickMovie('thriller')">Thriller</button>
     </div>
 
-    <!-- Area where the shuffling text & selected movie will appear -->
-    <div id="movie-display" class="result-box">Click a genre to start!</div>
+    <!-- Display Area for Movie Details -->
+    <div id="movie-display" class="result-box">Select a genre bubble to discover a movie!</div>
   </main>
 
-  <!-- External JavaScript File -->
   <script src="script.js"></script>
 </body>
 </html>
