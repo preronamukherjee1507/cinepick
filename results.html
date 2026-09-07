@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinePick - Results</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .results-container {
+      max-width: 1000px;
+      width: 90%;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .movie-card {
+      background: #1e293b;
+      border-radius: 20px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      background: #3b82f6;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Your Movie Picks</h1>
+  </header>
+
+  <div class="results-container" id="results">
+    <!-- Movie results will be populated here -->
+  </div>
+
+  <a href="index.html" class="back-btn">Try Another Pick</a>
+
+  <script>
+    // Read query parameters passed from index.html
+    const params = new URLSearchParams(window.location.search);
+    const genre = params.get('genre');
+    const mood = params.get('mood');
+
+    const resultsContainer = document.getElementById('results');
+
+    // Example logic to render output based on selections
+    if (genre || mood) {
+      resultsContainer.innerHTML = `
+        <div class="movie-card">
+          <h3>Selected Genre</h3>
+          <p>${genre ? genre : 'Any'}</p>
+        </div>
+        <div class="movie-card">
+          <h3>Selected Mood</h3>
+          <p>${mood ? mood : 'Any'}</p>
+        </div>
+      `;
+    } else {
+      resultsContainer.innerHTML = '<p>No options selected. Please go back and pick your preferences.</p>';
+    }
+  </script>
+</body>
+</html>
