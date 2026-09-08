@@ -1,483 +1,150 @@
-// Audio references
+// Preload audio elements
 const shuffleSound = new Audio('shuffle.mp3');
 const beepSound = new Audio('beep.mp3');
-shuffleSound.loop = true;
 
-// 8 Genres x 50 Movies (Hollywood + Bollywood mix with Plot, Rating, Platform)
-const moviesDatabase = {
+// 50 Movies Per Genre (Hollywood + Bollywood mix)
+const movieData = {
   action: [
-    { title: "Mad Max: Fury Road", year: 2015, rating: "8.1/10", platform: "Max / Prime Video", plot: "In a post-apocalyptic wasteland, Max teams up with Furiosa to escape a ruthless warlord." },
-    { title: "Jawan", year: 2023, rating: "7.0/10", platform: "Netflix", plot: "A vigilante commander leads a team of women in daring heists to expose government corruption." },
-    { title: "The Dark Knight", year: 2008, rating: "9.0/10", platform: "Max", plot: "Batman faces his greatest psychological test against the chaotic criminal mastermind, the Joker." },
-    { title: "Pathaan", year: 2023, rating: "5.9/10", platform: "Prime Video", plot: "An exiled RAW agent returns to defeat a rogue mercenary threat armed with a deadly virus." },
-    { title: "John Wick", year: 2014, rating: "7.4/10", platform: "Peacock / Prime Video", plot: "An ex-hitman returns to the criminal underworld to hunt down the gangsters who took everything from him." },
-    { title: "RRR", year: 2021, rating: "7.8/10", platform: "Netflix", plot: "Two legendary revolutionaries forge a deep friendship while fighting British colonial rule." },
-    { title: "Die Hard", year: 1988, rating: "8.2/10", platform: "Hulu", plot: "An NYPD officer fights off terrorists who have taken over a Los Angeles skyscraper." },
-    { title: "War", year: 2019, rating: "6.5/10", platform: "Prime Video", plot: "An Indian soldier is tasked with hunting down his former mentor who has gone rogue." },
-    { title: "Gladiator", year: 2000, rating: "8.5/10", platform: "Paramount+", plot: "A former Roman general seeks revenge against the corrupt emperor who murdered his family." },
-    { title: "Animal", year: 2023, rating: "6.2/10", platform: "Netflix", plot: "A son's obsessive love for his father leads him down a dark path of relentless violence." },
-    { title: "Aliens", year: 1986, rating: "8.4/10", platform: "Hulu", plot: "Ellen Ripley returns to a terraforming colony to battle an army of xenomorphs." },
-    { title: "Dhoom 2", year: 2006, rating: "6.6/10", platform: "Prime Video", plot: "A fearless police officer tracks a high-tech thief who steals invaluable artifacts." },
-    { title: "Terminator 2: Judgment Day", year: 1991, rating: "8.6/10", platform: "Paramount+", plot: "A reprogrammed cyborg is sent back in time to protect a young boy from a liquid metal assassin." },
-    { title: "K.G.F: Chapter 1", year: 2018, rating: "8.2/10", platform: "Prime Video", plot: "A fierce mercenary rises to power in the brutal Kolar Gold Fields." },
-    { title: "Avengers: Endgame", year: 2019, rating: "8.4/10", platform: "Disney+", plot: "The remaining Avengers assemble to reverse the catastrophic destruction caused by Thanos." },
-    { title: "Singham", year: 2011, rating: "6.8/10", platform: "Prime Video", plot: "An honest police officer stands up against a powerful, corrupt politician in his town." },
-    { title: "Mission: Impossible - Fallout", year: 2018, rating: "7.7/10", platform: "Paramount+", plot: "Ethan Hunt and his team race to recover stolen plutonium before a terrorist group uses it." },
-    { title: "Vikram", year: 2022, rating: "8.3/10", platform: "Disney+ Hotstar", plot: "A special operative squad investigates a masked vigilante group carrying out targeted assassinations." },
-    { title: "The Matrix", year: 1999, rating: "8.7/10", platform: "Max", plot: "A computer hacker discovers the startling truth about his reality and his role in a war against machines." },
-    { title: "Bang Bang!", year: 2014, rating: "5.6/10", platform: "Disney+ Hotstar", plot: "A bank receptionist gets caught up in a globe-trotting adventure with a mysterious secret agent." },
-    { title: "Top Gun: Maverick", year: 2022, rating: "8.3/10", platform: "Paramount+", plot: "Pete Mitchell trains a graduate detachment of naval aviators for a specialized, dangerous mission." },
-    { title: "Uri: The Surgical Strike", year: 2019, rating: "8.2/10", platform: "ZEE5", plot: "Indian army special forces execute a covert surgical strike against terrorist camps." },
-    { title: "Casino Royale", year: 2006, rating: "8.0/10", platform: "Prime Video", plot: "James Bond embarks on his first mission as 007 to defeat a terrorist financier in a high-stakes poker game." },
-    { title: "Don 2", year: 2011, rating: "7.1/10", platform: "Netflix", plot: "An international drug lord plans an ambitious bank heist in Berlin while evading police." },
-    { title: "Inception", year: 2010, rating: "8.8/10", platform: "Max", plot: "A thief who enters people's dreams to steal secrets is tasked with planting an idea into a CEO's mind." },
-    { title: "Shershaah", year: 2021, rating: "8.3/10", platform: "Prime Video", plot: "The heroic story of Captain Vikram Batra, a soldier who fought bravely in the Kargil War." },
-    { title: "Skyfall", year: 2012, rating: "7.8/10", platform: "Max", plot: "James Bond's loyalty to M is tested when her past comes back to haunt MI6." },
-    { title: "Krrish 3", year: 2013, rating: "5.3/10", platform: "SonyLIV", plot: "A superhero faces off against a mutated evil genius intent on spreading a deadly virus." },
-    { title: "Black Panther", year: 2018, rating: "7.3/10", platform: "Disney+", plot: "T'Challa returns home to Wakanda to assume the throne, but faces a powerful challenger." },
-    { title: "Agneepath", year: 2012, rating: "6.9/10", platform: "Prime Video", plot: "A young man seeks vengeance against a ruthless drug lord who murdered his father." },
-    { title: "Speed", year: 1994, rating: "7.3/10", platform: "Hulu", plot: "A LAPD officer must prevent a bomb on a city bus from exploding by keeping its speed above 50 mph." },
-    { title: "Ghayal", year: 1990, rating: "7.6/10", platform: "ZEE5", plot: "A boxer is framed for his brother's murder and sets out to bring the true culprit to justice." },
-    { title: "The Bourne Identity", year: 2002, rating: "7.9/10", platform: "Peacock", plot: "A man suffering from amnesia tries to discover his identity while fleeing assassins." },
-    { title: "Ra.One", year: 2011, rating: "4.8/10", platform: "Eros Now / YouTube", plot: "A game developer creates a digital villain who escapes into the real world." },
-    { title: "Predator", year: 1987, rating: "7.8/10", platform: "Hulu", plot: "A team of paramilitary soldiers is hunted by an extraterrestrial creature in a Central American jungle." },
-    { title: "Force", year: 2011, rating: "6.5/10", platform: "Disney+ Hotstar", plot: "An uncompromising narcotics officer faces a dangerous drug lord seeking revenge." },
-    { title: "Logan", year: 2017, rating: "8.1/10", platform: "Disney+", plot: "An aging Wolverine cares for an ailing Professor X while protecting a young mutant girl." },
-    { title: "Commando", year: 2013, rating: "6.2/10", platform: "ZEE5", plot: "An Indian special forces officer escapes a enemy camp and defends a woman from a local thug." },
-    { title: "Spider-Man: Into the Spider-Verse", year: 2018, rating: "8.4/10", platform: "Fubo / FX", plot: "Teenager Miles Morales becomes Spider-Man and joins alternate heroes to stop a multiverse threat." },
-    { title: "Gadar: Ek Prem Katha", year: 2001, rating: "7.3/10", platform: "ZEE5", plot: "During Partition, a truck driver falls in love with an aristocratic Muslim woman and fights for her return." },
-    { title: "Taken", year: 2008, rating: "7.8/10", platform: "Hulu", plot: "A retired CIA agent travels across Europe to rescue his estranged daughter from human traffickers." },
-    { title: "Dabangg", year: 2010, rating: "6.2/10", platform: "Prime Video", plot: "A corrupt but charming police officer takes on a local politician in a small town." },
-    { title: "Kill Bill: Vol. 1", year: 2003, rating: "8.2/10", platform: "Prime Video", plot: "An assassin awakens from a four-year coma and embarks on a quest for revenge against her former team." },
-    { title: "Tiger Zinda Hai", year: 2017, rating: "5.9/10", platform: "Prime Video", plot: "RAW and ISI operatives collaborate to rescue a group of nurses held hostage by a terrorist group." },
-    { title: "300", year: 2006, rating: "7.6/10", platform: "Max", plot: "King Leonidas leads 300 Spartans into battle against the massive Persian army." },
-    { title: "A Wednesday!", year: 2008, rating: "8.1/10", platform: "Netflix", plot: "A retiring police commissioner recounts his most challenging day dealing with a mysterious caller." },
-    { title: "Baby Driver", year: 2017, rating: "7.6/10", platform: "Prime Video", plot: "A talented getaway driver relies on his personal soundtrack to be the best in the business." },
-    { title: "Khakee", year: 2004, rating: "7.4/10", platform: "YouTube", plot: "A police team escorting a dangerous terrorist faces lethal ambushes during their journey." },
-    { title: "The Raid: Redemption", year: 2011, rating: "7.6/10", platform: "Max", plot: "A SWAT team becomes trapped in a tenement building run by a ruthless mobster." },
-    { title: "Dishoom", year: 2016, rating: "5.1/10", platform: "ZEE5", plot: "Two cops must work together across the Middle East to find a kidnapped star cricketer." }
+    "Mad Max: Fury Road", "Die Hard", "The Dark Knight", "John Wick", "Gladiator",
+    "Terminator 2: Judgment Day", "Aliens", "Matrix", "Raiders of the Lost Ark", "Top Gun: Maverick",
+    "Avengers: Endgame", "Spider-Man: Into the Spider-Verse", "Casino Royale", "Mission: Impossible - Fallout", "Speed",
+    "Logan", "Kill Bill: Vol. 1", "Dhoom 2", "Sholay", "War",
+    "Pathaan", "Jawan", "Gangs of Wasseypur", "RRR", "KGF: Chapter 1", "KGF: Chapter 2",
+    "Don 2", "Agneepath", "Singham", "Uri: The Surgical Strike", "Vikram",
+    "The Raid: Redemption", "Baby Driver", "Bourne Ultimatum", "The Dark Knight Rises", "Avengers: Infinity War",
+    "Skyfall", "Captain America: The Winter Soldier", "Inception", "Ip Man", "Hard Core Henry",
+    "Edge of Tomorrow", "Guardians of the Galaxy", "District 9", "Predator", "First Blood",
+    "RoboCop", "Face/Off", "Con Air", "The Rock"
   ],
-
   comedy: [
-    { title: "3 Idiots", year: 2009, rating: "8.4/10", platform: "Prime Video", plot: "Two college friends search for their long-lost mentor who changed their outlook on education." },
-    { title: "The Hangover", year: 2009, rating: "7.7/10", platform: "Hulu", plot: "Three friends wake up from a wild bachelor party in Las Vegas with no memory and a missing groom." },
-    { title: "Hera Pheri", year: 2000, rating: "8.1/10", platform: "Prime Video", plot: "Three eccentric roommates attempt to resolve their financial troubles by intercepting a ransom call." },
-    { title: "Superbad", year: 2007, rating: "7.6/10", platform: "Netflix", plot: "Two high school seniors plan a booze-fueled party before graduating, leading to unexpected chaos." },
-    { title: "Stree", year: 2018, rating: "7.5/10", platform: "Disney+ Hotstar", plot: "A small town lives in terror of a female spirit who abducts men during an annual festival." },
-    { title: "Monty Python and the Holy Grail", year: 1975, rating: "8.2/10", platform: "Netflix", plot: "King Arthur and his knights embark on a surreal and humorous quest for the Holy Grail." },
-    { title: "Golmaal: Fun Unlimited", year: 2006, rating: "7.5/10", platform: "Prime Video", plot: "Four runaway friends take shelter in a blind couple's home while posing as relatives." },
-    { title: "Groundhog Day", year: 1993, rating: "8.0/10", platform: "AMC+", plot: "A cynical TV weatherman finds himself trapped in a time loop, repeating the same day continuously." },
-    { title: "Chup Chup Ke", year: 2006, rating: "6.9/10", platform: "Netflix", plot: "A debt-ridden young man pretends to be deaf and mute, leading to hilarious misunderstandings." },
-    { title: "Dumb and Dumber", year: 1994, rating: "7.3/10", platform: "Max", plot: "Two well-meaning but dim-witted friends travel cross-country to return a briefcase." },
-    { title: "Bhagam Bhag", year: 2006, rating: "6.5/10", platform: "ZEE5", plot: "Theatre troupe members in London become suspects in a murder case they didn't commit." },
-    { title: "Anchorman: The Legend of Ron Burgundy", year: 2004, rating: "7.1/10", platform: "Paramount+", plot: "A top-rated 1970s TV news anchor faces competition when an ambitious female reporter arrives." },
-    { title: "Munna Bhai M.B.B.S.", year: 2003, rating: "8.1/10", platform: "Prime Video", plot: "A local gangster pretends to be a medical doctor to fulfill his father's dream." },
-    { title: "Shaun of the Dead", year: 2004, rating: "7.9/10", platform: "Peacock", plot: "A London man and his slacker friend attempt to navigate a sudden zombie apocalypse." },
-    { title: "Welcome", year: 2007, rating: "7.0/10", platform: "Prime Video", plot: "A man falls in love with a woman, unaware that her brothers are notorious underworld dons." },
-    { title: "Tropic Thunder", year: 2008, rating: "7.1/10", platform: "Paramount+", plot: "Actors making a big-budget war movie are forced to become real soldiers in a jungle." },
-    { title: "Andaz Apna Apna", year: 1994, rating: "8.0/10", platform: "Prime Video", plot: "Two slackers compete for the affection of an heiress while inadvertently protecting her from villains." },
-    { title: "Bridesmaids", year: 2011, rating: "6.8/10", platform: "Peacock", plot: "Competition between a maid of honor and a bridesmaid threatens to ruin a friend's wedding." },
-    { title: "Dhamaal", year: 2007, rating: "7.4/10", platform: "Prime Video", plot: "Four lazy friends race across the country after learning about a hidden treasure." },
-    { title: "The Grand Budapest Hotel", year: 2014, rating: "8.1/10", platform: "Hulu", plot: "A famous concierge and his lobby boy get involved in the theft of a valuable painting." },
-    { title: "Fukrey", year: 2013, rating: "6.9/10", platform: "Prime Video", plot: "Four college aspirants seek quick cash through dreams, attracting the attention of a female gangster." },
-    { title: "Mean Girls", year: 2004, rating: "7.1/10", platform: "Paramount+", plot: "A home-schooled teen navigates high school social cliques after moving to the suburbs." },
-    { title: "Bala", year: 2019, rating: "7.3/10", platform: "Disney+ Hotstar", plot: "A young man suffers from premature balding and struggles with societal expectations of beauty." },
-    { title: "Step Brothers", year: 2008, rating: "6.9/10", platform: "Max", plot: "Two middle-aged, lazy men living with their single parents are forced to become stepbrothers." },
-    { title: "Badhaai Ho", year: 2018, rating: "7.9/10", platform: "Disney+ Hotstar", plot: "A 25-year-old man faces social embarrassment when his middle-aged mother becomes pregnant." },
-    { title: "Zoolander", year: 2001, rating: "6.5/10", platform: "Paramount+", plot: "A clueless male model is brainwashed into attempting an assassination in the fashion world." },
-    { title: "Vicky Donor", year: 2012, rating: "7.8/10", platform: "Eros Now", plot: "A fertility clinic doctor convinces a young man to become a sperm donor." },
-    { title: "21 Jump Street", year: 2012, rating: "7.2/10", platform: "Prime Video", plot: "Two underachieving police officers go undercover as high school students to bust a drug ring." },
-    { title: "Bareilly Ki Barfi", year: 2017, rating: "7.5/10", platform: "ZEE5", plot: "A free-spirited woman seeks the author of a book that seems to describe her own life." },
-    { title: "Home Alone", year: 1990, rating: "7.7/10", platform: "Disney+", plot: "An eight-year-old boy accidentally left behind for Christmas defends his home from burglars." },
-    { title: "Delhi Belly", year: 2011, rating: "7.5/10", platform: "Netflix", plot: "Three roommates inadvertently become targeted by a powerful crime syndicate over misplaced diamonds." },
-    { title: "The Mask", year: 1994, rating: "6.9/10", platform: "Max", plot: "A timid bank clerk transforms into a manic, green-faced superhero after finding a mysterious mask." },
-    { title: "Khosla Ka Ghosla!", year: 2006, rating: "8.3/10", platform: "Disney+ Hotstar", plot: "A retired middle-class man and his family try to reclaim their land from a deceitful property dealer." },
-    { title: "Ghostbusters", year: 1984, rating: "7.8/10", platform: "Hulu", plot: "Three former parapsychologists start a unique ghost-removal service in New York City." },
-    { title: "No Entry", year: 2005, rating: "6.6/10", platform: "ZEE5", plot: "Three married men face comedic troubles when an attractive woman enters their lives." },
-    { title: "Game Night", year: 2018, rating: "7.0/10", platform: "Max", plot: "A group of friends on a regular game night find themselves solving a real-life mystery." },
-    { title: "Dream Girl", year: 2019, rating: "7.0/10", platform: "ZEE5", plot: "A man with a talent for impersonating a female voice takes a call center job, attracting eccentric callers." },
-    { title: "Ferris Bueller's Day Off", year: 1986, rating: "7.8/10", platform: "Paramount+", plot: "A high school wise-guy plays hooky and embarks on a memorable day in Chicago with his friends." },
-    { title: "Pyaar Ka Punchnama", year: 2011, rating: "7.6/10", platform: "Netflix", plot: "Three bachelor friends face relationship challenges when they fall in love with different women." },
-    { title: "Palm Springs", year: 2020, rating: "7.4/10", platform: "Hulu", plot: "Two wedding guests get stuck in a romantic time loop while attending a celebration in Palm Springs." },
-    { title: "Housefull", year: 2010, rating: "5.5/10", platform: "Eros Now", plot: "A unlucky man searches for true love, leading to a series of comedic misunderstandings in London." },
-    { title: "Pitch Perfect", year: 2012, rating: "7.1/10", platform: "Peacock", plot: "A college student joins an all-female a cappella group and helps them revamp their music style." },
-    { title: "Dolly Kitty Aur Woh Chamakte Sitare", year: 2019, rating: "5.5/10", platform: "Netflix", plot: "Two cousins navigate life, desires, and independence in a developing suburb." },
-    { title: "The Nice Guys", year: 2016, rating: "7.4/10", platform: "Prime Video", plot: "A private eye and a hired enforcer investigate the disappearance of a girl in 1970s Los Angeles." },
-    { title: "Good Newwz", year: 2019, rating: "6.8/10", platform: "ZEE5", plot: "Two couples with the same surname discover an in-vitro fertilization blunder at their clinic." },
-    { title: "Knives Out", year: 2019, rating: "7.9/10", platform: "Prime Video", plot: "A detective investigates the death of a patriarch of an eccentric, combative family." },
-    { title: "Bhoot Police", year: 2021, rating: "7.0/10", platform: "Disney+ Hotstar", plot: "Two brothers specializing in fake exorcisms face a real demonic spirit in a remote estate." },
-    { title: "Crazy, Stupid, Love.", year: 2011, rating: "7.4/10", platform: "Max", plot: "A newly single man gets advice on dating and confidence from a smooth-talking bachelor." },
-    { title: "Sonu Ke Titu Ki Sweety", year: 2018, rating: "7.1/10", platform: "Prime Video", plot: "A loyal friend tries to expose his childhood friend's fiancee, believing she is too good to be true." },
-    { title: "Borat", year: 2006, rating: "7.4/10", platform: "Max", plot: "A Kazakh TV journalist travels across America to create a documentary on American culture." }
+    "Superbad", "The Hangover", "Step Brothers", "Mean Girls", "Anchorman",
+    "Groundhog Day", "Monty Python and the Holy Grail", "Dumb and Dumber", "Shaun of the Dead", "Tropic Thunder",
+    "Bridesmaids", "21 Jump Street", "Ferris Bueller's Day Off", "The Big Lebowski", "Airplane!",
+    "Hera Pheri", "Phir Hera Pheri", "3 Idiots", "Chup Chup Ke", "Bhool Bhulaiyaa",
+    "Welcome", "Dhamaal", "Golmaal: Fun Unlimited", "Munna Bhai M.B.B.S.", "Lage Raho Munna Bhai",
+    "Stree", "Fukrey", "Delhi Belly", "Bala", "Bareilly Ki Barfi",
+    "Dolly Ke Doli", "Badhaai Ho", "Vicky Donor", "Piku", "Khosla Ka Ghosla",
+    "Hot Fuzz", "Zoolander", "Borat", "Clerks", "Office Space",
+    "Game Night", "Booksmart", "The Nice Guys", "What We Do in the Shadows", "Crazy Stupid Love",
+    "Easy A", "We're the Millers", "Dodgeball", "Meet the Parents", "School of Rock"
   ],
-
   crime: [
-    { title: "Gangs of Wasseypur", year: 2012, rating: "8.2/10", platform: "Netflix", plot: "A bloody conflict between rival factions spans three generations in a coal mining town." },
-    { title: "Pulp Fiction", year: 1994, rating: "8.9/10", platform: "Paramount+", plot: "The lives of mob hitmen, a boxer, and bandits intertwine in four tales of crime and redemption." },
-    { title: "Drishyam", year: 2015, rating: "8.2/10", platform: "Disney+ Hotstar", plot: "A local cable operator uses clever alibis to protect his family after an unexpected crime." },
-    { title: "The Godfather", year: 1972, rating: "9.2/10", platform: "Paramount+", plot: "The aging patriarch of an organized crime family transfers control of his empire to his reluctant son." },
-    { title: "Sacred Games", year: 2018, rating: "8.5/10", platform: "Netflix", plot: "A troubled police officer receives a mysterious tip about an imminent threat to Mumbai." },
-    { title: "Goodfellas", year: 1990, rating: "8.7/10", platform: "Max", plot: "The story of Henry Hill and his life in the Mob, covering his rise and ultimate downfall." },
-    { title: "Special 26", year: 2013, rating: "8.0/10", platform: "Prime Video", plot: "A team of con artists executes high-profile heists by posing as fake CBI officers." },
-    { title: "Se7en", year: 1995, rating: "8.6/10", platform: "Max", plot: "Two detectives hunt a serial killer who uses the seven deadly sins as his motives." },
-    { title: "Satya", year: 1998, rating: "8.3/10", platform: "SonyLIV", plot: "An innocent man arriving in Mumbai gets drawn into the dark underworld of organized crime." },
-    { title: "The Departed", year: 2006, rating: "8.5/10", platform: "Max", plot: "An undercover cop and a mole in the police force try to identify each other in Boston." },
-    { title: "Company", year: 2002, rating: "8.0/10", platform: "ZEE5", plot: "A young henchman forms an alliance with a mob boss before ideological differences split them." },
-    { title: "No Country for Old Men", year: 2007, rating: "8.2/10", platform: "Paramount+", plot: "A hunter stumbles upon a drug deal gone wrong and is pursued by a psychopathic hitman." },
-    { title: "Article 15", year: 2019, rating: "8.1/10", platform: "Netflix", plot: "An upright police officer investigates the disappearance of three young girls in rural India." },
-    { title: "Heat", year: 1995, rating: "8.3/10", platform: "Hulu", plot: "A veteran LAPD detective obsessively tracks a high-stakes bank robber and his crew." },
-    { title: "Talvar", year: 2015, rating: "8.1/10", platform: "Disney+ Hotstar", plot: "An experienced investigator examines conflicting theories surrounding a double murder case." },
-    { title: "Reservoir Dogs", year: 1992, rating: "8.3/10", platform: "Prime Video", plot: "When a simple jewel heist goes wrong, the surviving criminals suspect an undercover cop is among them." },
-    { title: "Shootout at Lokhandwala", year: 2007, rating: "7.1/10", platform: "Disney+ Hotstar", plot: "Police surround a residential complex housing notorious gangsters during a real-life standoff." },
-    { title: "City of God", year: 2002, rating: "8.6/10", platform: "Paramount+", plot: "Two boys growing up in a violent Rio de Janeiro neighborhood take different life paths." },
-    { title: "Raman Raghav 2.0", year: 2016, rating: "7.3/10", platform: "ZEE5", plot: "A serial killer finds an unexpected soulmate in the corrupt police officer investigating him." },
-    { title: "Scarface", year: 1983, rating: "8.3/10", platform: "Peacock", plot: "A Cuban immigrant arrives in Miami with nothing and rises to become a powerful drug kingpin." },
-    { title: "Raees", year: 2017, rating: "6.8/10", platform: "Netflix", plot: "A bootlegger builds an empire in Gujarat while trying to outsmart a determined police officer." },
-    { title: "The Usual Suspects", year: 1995, rating: "8.5/10", platform: "Prime Video", plot: "A sole survivor tells the story of a heist masterminded by a mythical crime lord named Keyser Söze." },
-    { title: "Delhi Crime", year: 2019, rating: "8.5/10", platform: "Netflix", plot: "DCP Vartika Chaturvedi leads a team searching for the culprits behind a high-profile crime." },
-    { title: "Snatch", year: 2000, rating: "8.2/10", platform: "Max", plot: "Unscrupulous boxing promoters, violent bookmakers, and Russian gangsters hunt for a stolen diamond." },
-    { title: "Badlapur", year: 2015, rating: "7.4/10", platform: "ZEE5", plot: "A man seeks relentless vengeance against two bank robbers who killed his wife and child." },
-    { title: "Zodiac", year: 2007, rating: "7.7/10", platform: "Paramount+", plot: "A cartoonist becomes obsessed with tracking down the mysterious Zodiac Killer in San Francisco." },
-    { title: "Sarkar", year: 2005, rating: "7.6/10", platform: "Disney+ Hotstar", plot: "An influential figure who operates above the law faces threats from corrupt politicians and rivals." },
-    { title: "L.A. Confidential", year: 1997, rating: "8.2/10", platform: "Max", plot: "Three LAPD officers investigate a series of murders with connections to corruption in 1950s Los Angeles." },
-    { title: "Maqbool", year: 2003, rating: "8.0/10", platform: "Disney+ Hotstar", plot: "An underworld Don's right-hand man falls in love with the boss's mistress, pushing him to betray his leader." },
-    { title: "Taxi Driver", year: 1976, rating: "8.2/10", platform: "Prime Video", plot: "A mentally unstable veteran working as a night driver in NYC decides to clean up the city streets." },
-    { title: "Black Friday", year: 2004, rating: "8.4/10", platform: "Disney+ Hotstar", plot: "An in-depth reconstruction of the investigations following the 1993 Bombay bomb blasts." },
-    { title: "Casino", year: 1995, rating: "8.2/10", platform: "Peacock", plot: "A mob associate oversees a Las Vegas casino operation while dealing with his volatile friend and wife." },
-    { title: "Shaitan", year: 2011, rating: "7.1/10", platform: "Netflix", plot: "Five spoiled youngsters try to fake a kidnapping to pay a bribe, resulting in tragic consequences." },
-    { title: "Dog Day Afternoon", year: 1975, rating: "8.0/10", platform: "Max", plot: "A inexperienced man attempts a bank robbery in Brooklyn, which quickly turns into a media circus." },
-    { title: "Agneepath", year: 1990, rating: "7.6/10", platform: "Prime Video", plot: "A boy grows up to become a gangster to seek revenge against the ruthless smuggler Kancha Cheena." },
-    { title: "Prisoners", year: 2013, rating: "8.1/10", platform: "Netflix", plot: "A desperate father takes matters into his own hands when his daughter goes missing." },
-    { title: "D-Day", year: 2013, rating: "7.2/10", platform: "Prime Video", plot: "A team of Indian secret agents cross the border to extract India's most wanted criminal." },
-    { title: "Fargo", year: 1996, rating: "8.1/10", platform: "Max", plot: "A pregnant Minnesota police chief investigates a series of murders tied to a botched kidnapping." },
-    { title: "Once Upon a Time in Mumbaai", year: 2010, rating: "7.4/10", platform: "Disney+ Hotstar", plot: "The rise of two powerful smugglers in 1970s Mumbai and the clash that changes the city's fate." },
-    { title: "Sicario", year: 2015, rating: "7.6/10", platform: "Prime Video", plot: "An idealistic FBI agent is assigned to an elite task force hunting a Mexican drug cartel boss." },
-    { title: "Kaminey", year: 2009, rating: "7.4/10", platform: "Netflix", plot: "Twin brothers with speech impediments become entangled in a high-stakes crime scheme involving drugs." },
-    { title: "Nightcrawler", year: 2014, rating: "7.8/10", platform: "Max", plot: "A desperate man enters the world of freelance crime journalism in Los Angeles." },
-    { title: "C.I.D.", year: 1956, rating: "7.3/10", platform: "YouTube", plot: "An inspector investigates a newspaper editor's murder and unravels a high-level conspiracy." },
-    { title: "American Gangster", year: 2007, rating: "7.8/10", platform: "Max", plot: "A detective sets out to bring down Frank Lucas, a drug kingpin smuggling heroin into the US." },
-    { title: "Jah violence / Shootout at Wadala", year: 2013, rating: "6.0/10", platform: "SonyLIV", plot: "The dramatized account of Mumbai police's first official encounter killing." },
-    { title: "Drive", year: 2011, rating: "7.8/10", platform: "Prime Video", plot: "A Hollywood stunt driver who moonlights as a getaway driver protects his neighbor from mobsters." },
-    { title: "Section 375", year: 2019, rating: "8.1/10", platform: "Prime Video", plot: "A high-profile court case examines complex legal arguments surrounding sexual assault laws." },
-    { title: "The Irishman", year: 2019, rating: "7.8/10", platform: "Netflix", plot: "An aging hitman recalls his involvement in the disappearance of labor union leader Jimmy Hoffa." },
-    { title: "Vaastav: The Reality", year: 1999, rating: "8.0/10", platform: "Prime Video", plot: "An innocent young man accidentally kills a mobster's brother and ascends as a feared crime lord." },
-    { title: "Blow", year: 2001, rating: "7.5/10", platform: "Max", plot: "The story of George Jung, the man who established the American cocaine market in the 1970s." }
+    "The Godfather", "The Godfather Part II", "Pulp Fiction", "Goodfellas", "Se7en",
+    "The Departed", "The Silence of the Lambs", "Usual Suspects", "City of God", "Reservoir Dogs",
+    "Heat", "Scarface", "Snatch", "L.A. Confidential", "Zodiac",
+    "Gangs of Wasseypur", "Drishyam", "Sacred Games", "Special 26", "Andhadhun",
+    "Talvar", "Kahaani", "Badlapur", "Raman Raghav 2.0", "Article 15",
+    "Shootout at Lokhandwala", "Once Upon a Time in Mumbaai", "Raees", "Gully Boy", "Gulaal",
+    "Shaitan", "Black Friday", "Dev.D", "Company", "Omkara",
+    "Casino", "No Country for Old Men", "Primal Fear", "Nightcrawler", "Prisoners",
+    "Memories of Murder", "Sicario", "The Irishmen", "American Gangster", "Road to Perdition",
+    "Fargo", "The Untouchables", "Training Day", "Donie Brasco", "Drive"
   ],
-
   drama: [
-    { title: "Dangal", year: 2016, rating: "8.3/10", platform: "Prime Video", plot: "A former wrestler trains his two daughters to overcome social stigmas and win international gold." },
-    { title: "The Shawshank Redemption", year: 1994, rating: "9.3/10", platform: "Max", plot: "Two imprisoned men bond over a number of years, finding solace and eventual redemption." },
-    { title: "Taare Zameen Par", year: 2007, rating: "8.3/10", platform: "Netflix", plot: "An 8-year-old struggling student finds his life transformed by an empathetic art teacher." },
-    { title: "Oppenheimer", year: 2023, rating: "8.9/10", platform: "Peacock", plot: "The life story of scientist J. Robert Oppenheimer and his role in developing the atomic bomb." },
-    { title: "Swades", year: 2004, rating: "8.2/10", platform: "Netflix", plot: "A successful NASA engineer returns to his Indian village and works to empower the community." },
-    { title: "Forrest Gump", year: 1994, rating: "8.8/10", platform: "Paramount+", plot: "A kind-hearted Alabama man witnesses and inadvertently influences historical events across decades." },
-    { title: "Lagaan", year: 2001, rating: "8.1/10", platform: "Netflix", plot: "Villagers in colonial India challenge British officers to a cricket match to avoid heavy taxes." },
-    { title: "Fight Club", year: 1999, rating: "8.8/10", platform: "Hulu", plot: "An unfulfilled office worker forms an underground fight club with a charismatic soap salesman." },
-    { title: "Udaan", year: 2010, rating: "8.1/10", platform: "Netflix", plot: "A teenager expelled from boarding school returns home to face an abusive, authoritarian father." },
-    { title: "Schindler's List", year: 1993, rating: "9.0/10", platform: "Paramount+", plot: "A German businessman saves over a thousand Jewish refugees during the Holocaust." },
-    { title: "Pink", year: 2016, rating: "8.1/10", platform: "Disney+ Hotstar", plot: "A retired lawyer defends three young women accused of assault in a high-profile case." },
-    { title: "12 Angry Men", year: 1957, rating: "9.0/10", platform: "Prime Video", plot: "A single juror attempts to prevent a rush to judgment during a murder trial deliberation." },
-    { title: "Bhaag Milkha Bhaag", year: 2013, rating: "8.2/10", platform: "Disney+ Hotstar", plot: "The biographical journey of runner Milkha Singh, who triumphs over personal tragedy." },
-    { title: "Whiplash", year: 2014, rating: "8.5/10", platform: "Hulu", plot: "A promising young drummer is pushed to his limits by a ruthless jazz instructor." },
-    { title: "Anand", year: 1971, rating: "8.3/10", platform: "Prime Video", plot: "A terminally ill man brings joy and optimism to the lives of those around him." },
-    { title: "The Godfather Part II", year: 1974, rating: "9.0/10", platform: "Paramount+", plot: "The early life of Vito Corleone in 1920s NYC is contrasted with his son's expanding empire." },
-    { title: "Masaan", year: 2015, rating: "8.1/10", platform: "Netflix", plot: "Four individuals in Varanasi navigate personal tragedies, social stigma, and moral dilemmas." },
-    { title: "Good Will Hunting", year: 1997, rating: "8.3/10", platform: "Max", plot: "A janitor at MIT with a gift for mathematics receives guidance from a compassionate therapist." },
-    { title: "Guzaarish", year: 2010, rating: "7.4/10", platform: "Prime Video", plot: "A paralyzed magician files a petition in court for the legal right to end his life." },
-    { title: "Dead Poets Society", year: 1989, rating: "8.1/10", platform: "Disney+", plot: "An unconventional English teacher inspires his students through poetry at a conservative prep school." },
-    { title: "Chak De! India", year: 2007, rating: "8.1/10", platform: "Prime Video", plot: "A former hockey captain coaches the Indian women's national team to international victory." },
-    { title: "There Will Be Blood", year: 2007, rating: "8.2/10", platform: "Paramount+", plot: "A ruthless oil prospector's pursuit of wealth damages his relationships and humanity." },
-    { title: "Barfi!", year: 2012, rating: "8.1/10", platform: "Netflix", plot: "A speech and hearing-impaired man forms deep connections with two different women." },
-    { title: "A Beautiful Mind", year: 1998, rating: "8.2/10", platform: "Prime Video", plot: "Mathematical genius John Nash struggles with schizophrenia while making groundbreaking discoveries." },
-    { title: "My Name Is Khan", year: 2010, rating: "7.9/10", platform: "Prime Video", plot: "An autistic man embarks on a journey across America to meet the President." },
-    { title: "The Social Network", year: 2010, rating: "7.8/10", platform: "Max", plot: "Harvard student Mark Zuckerberg creates Facebook, leading to legal conflicts with former friends." },
-    { title: "Haider", year: 2014, rating: "8.0/10", platform: "ZEE5", plot: "A young man returns to Kashmir to seek answers about his father's disappearance." },
-    { title: "The Green Mile", year: 1999, rating: "8.6/10", platform: "Max", plot: "A death row officer discovers that an inmate possesses extraordinary healing gifts." },
-    { title: "Black", year: 2005, rating: "8.1/10", platform: "Netflix", plot: "A deaf-blind girl develops a life-changing bond with her dedicated teacher." },
-    { title: "La La Land", year: 2016, rating: "8.0/10", platform: "Hulu", plot: "An aspiring actress and a jazz musician struggle to maintain their romance while pursuing dreams." },
-    { title: "Zindagi Na Milegi Dobara", year: 2011, rating: "8.2/10", platform: "Netflix", plot: "Three friends on a road trip in Spain face their fears and re-evaluate their life choices." },
-    { title: "Parasite", year: 2019, rating: "8.5/10", platform: "Max", plot: "A low-income family infiltrates a wealthy household, triggering unforeseen consequences." },
-    { title: "Piku", year: 2015, rating: "7.6/10", platform: "SonyLIV", plot: "A daughter and her aging, hypochondriac father navigate a road trip from Delhi to Kolkata." },
-    { title: "The Pianist", year: 2002, rating: "8.5/10", platform: "Prime Video", plot: "A Jewish musician struggles to survive the destruction of the Warsaw ghetto in WWII." },
-    { title: "Sardar Udham", year: 2021, rating: "8.4/10", platform: "Prime Video", plot: "The life of Udham Singh, who spent two decades seeking justice for the Jallianwala Bagh massacre." },
-    { title: "Spotlight", year: 2015, rating: "8.1/10", platform: "Starz", plot: "The Boston Globe's investigative team uncovers a systemic cover-up within the local Catholic Church." },
-    { title: "Guru", year: 2007, rating: "7.7/10", platform: "Netflix", plot: "An ambitious villager builds one of India's largest business empires amidst controversy." },
-    { title: "Cast Away", year: 2000, rating: "7.8/10", platform: "Paramount+", plot: "A FedEx executive learns to survive physically and emotionally after marooning on a deserted island." },
-    { title: "The Pursuit of Happyness", year: 2006, rating: "8.0/10", platform: "Prime Video", plot: "A struggling salesman takes custody of his young son while pursuing an unpaid internship." },
-    { title: "Padmaavat", year: 2018, rating: "7.1/10", platform: "Prime Video", plot: "A Rajput queen's legend unfolds as a ruthless Sultan wages war to capture her." },
-    { title: "Magnolia", year: 1999, rating: "8.0/10", platform: "Max", plot: "Interconnected characters in the San Fernando Valley search for love and forgiveness." },
-    { title: "Paa", year: 2009, rating: "7.1/10", platform: "YouTube", plot: "A young boy with progeria maintains a cheerful outlook while bonding with his politician father." },
-    { title: "Life of Pi", year: 2012, rating: "7.9/10", platform: "Disney+", plot: "A young man survives a disaster at sea and shares a lifeboat with a Bengal tiger." },
-    { title: "Rockstar", year: 2011, rating: "7.7/10", platform: "Eros Now", plot: "A musician's search for artistic inspiration leads to heartbreak and global fame." },
-    { title: "12 Years a Slave", year: 2013, rating: "8.1/10", platform: "Hulu", plot: "A free Black man from upstate New York is kidnapped and sold into slavery in 1841." },
-    { title: "Baghban", year: 2003, rating: "7.4/10", platform: "Prime Video", plot: "An elderly couple is mistreated and separated by their selfish children after retirement." },
-    { title: "Standard Operating Procedure", year: 2008, rating: "7.5/10", platform: "Prime Video", plot: "An examination of the abuses at the Abu Ghraib prison during the Iraq conflict." },
-    { title: "Article 370", year: 2024, rating: "8.0/10", platform: "JioCinema", plot: "An intelligence officer is tasked with a secret mission to combat terrorism in Jammu and Kashmir." },
-    { title: "Braveheart", year: 1995, rating: "8.3/10", platform: "Paramount+", plot: "William Wallace leads his countrymen in a rebellion against King Edward I of England." },
-    { title: "Dil Chahta Hai", year: 2001, rating: "8.1/10", platform: "Netflix", plot: "Three close college friends part ways over different perspectives on love and life." }
+    "The Shawshank Redemption", "Fight Club", "Forrest Gump", "Whiplash", "12 Angry Men",
+    "Schindler's List", "One Flew Over the Cuckoo's Nest", "Good Will Hunting", "The Social Network", "Parasite",
+    "Dead Poets Society", "The Prestige", "Requiem for a Dream", "A Beautiful Mind", "Whiplash",
+    "Swades", "Taare Zameen Par", "Udaan", "Massoom", "Anand",
+    "Gully Boy", "Barfi!", "The Lunchbox", "Bhaag Milkha Bhaag", "Dangal", "October",
+    "Sardar Udham", "Lagaan", "Article 15", "Masaan", "Haider",
+    "Rockstar", "Tamasha", "Wake Up Sid", "Zindagi Na Milegi Dobara", "Dil Chahta Hai",
+    "Green Book", "La La Land", "Marriage Story", "The Truman Show", "Room",
+    "Spotlight", "Cast Away", "Before Sunrise", "The Grand Budapest Hotel", "The Revenant",
+    "Sound of Metal", "Manchester by the Sea", "Birdman", "The Pianist"
   ],
-
   horror: [
-    { title: "Tumbbad", year: 2018, rating: "8.2/10", platform: "Prime Video", plot: "A man's search for ancestral treasure hidden in a cursed mansion brings deadly consequences." },
-    { title: "The Conjuring", year: 2013, rating: "7.5/10", platform: "Max", plot: "Paranormal investigators help a family terrorized by a dark presence in their farmhouse." },
-    { title: "Bhool Bhulaiyaa", year: 2007, rating: "7.4/10", platform: "Netflix", plot: "A psychiatrist investigates mysterious occurrences inside an ancestral palace." },
-    { title: "Get Out", year: 2017, rating: "7.7/10", platform: "Peacock", plot: "A young man visits his girlfriend's family estate and uncovers disturbing secrets." },
-    { title: "Hereditary", year: 2018, rating: "7.3/10", platform: "Max", plot: "A grieving family is haunted by tragic secrets following the death of their matriarch." },
-    { title: "13B: Fear Has a New Address", year: 2009, rating: "7.3/10", platform: "Prime Video", plot: "A man realizes the soap opera his family watches depicts events about to happen in his apartment." },
-    { title: "A Nightmare on Elm Street", year: 1984, rating: "7.4/10", platform: "Max", plot: "Teenagers are targeted in their dreams by a burnt killer who attacks with a glove of blades." },
-    { title: "Pari", year: 2018, rating: "6.6/10", platform: "Prime Video", plot: "A man offers shelter to a quiet woman, discovering her link to a dark cult." },
-    { title: "The Exorcist", year: 1973, rating: "8.1/10", platform: "Max", plot: "Two priests attempt to save a young girl possessed by a mysterious demonic entity." },
-    { title: "Raaz", year: 2002, rating: "6.6/10", platform: "YouTube", plot: "A couple moves to a quiet retreat to save their marriage, facing supernatural occurrences." },
-    { title: "It", year: 2017, rating: "7.3/10", platform: "Max", plot: "A group of bullied kids face a shape-shifting monster that emerges every 27 years." },
-    { title: "Stree 2", year: 2024, rating: "7.6/10", platform: "Prime Video", plot: "The town of Chanderi unites once more to confront a new headless phantom." },
-    { title: "Alien", year: 1979, rating: "8.5/10", platform: "Hulu", plot: "The crew of a commercial spaceship investigates a signal and encounters a deadly lifeform." },
-    { title: "Bhoot", year: 2003, rating: "6.5/10", platform: "Prime Video", plot: "A couple moves into a high-rise apartment previously occupied by a woman who jumped to her death." },
-    { title: "The Shining", year: 1980, rating: "8.4/10", platform: "Max", plot: "A writer loses his sanity while serving as winter caretaker at an isolated hotel." },
-    { title: "1920", year: 2008, rating: "6.4/10", platform: "YouTube", plot: "A man moves into an old mansion with his wife, who becomes possessed by a vengeful spirit." },
-    { title: "A Quiet Place", year: 2018, rating: "7.5/10", platform: "Paramount+", plot: "A family must navigate life in silence to avoid blind alien creatures with acute hearing." },
-    { title: "Darna Mana Hai", year: 2003, rating: "6.3/10", platform: "YouTube", plot: "Friends stranded in a dark forest tell scary stories around a campfire." },
-    { title: "The Ring", year: 2002, rating: "7.1/10", platform: "Paramount+", plot: "A journalist investigates a cursed videotape that seems to cause viewers to die in seven days." },
-    { title: "Ek Thi Daayan", year: 2013, rating: "5.8/10", platform: "Prime Video", plot: "A magician suffers from hallucinations caused by a witch from his childhood past." },
-    { title: "Midsommar", year: 2019, rating: "7.1/10", platform: "Max", plot: "A couple travels to Sweden for a festival that quickly devolves into a pagan ritual." },
-    { title: "Ragini MMS", year: 2011, rating: "5.0/10", platform: "ALTBalaji", plot: "A weekend getaway turns into a nightmare when a couple enters a haunted farmhouse." },
-    { title: "Poltergeist", year: 1982, rating: "7.3/10", platform: "Max", plot: "Ghosts invade a suburban family's home and abduct their youngest daughter." },
-    { title: "Pizza", year: 2014, rating: "6.2/10", platform: "Disney+ Hotstar", plot: "A delivery boy arrives at a bungalow to deliver food and finds himself trapped in a nightmare." },
-    { title: "Insidious", year: 2010, rating: "6.8/10", platform: "Max", plot: "Parents seek help when their son enters a comatose state and becomes a vessel for ghosts." },
-    { title: "Lucci / Lupt", year: 2018, rating: "5.2/10", platform: "ZEE5", plot: "A family on a road trip begins encountering frightening illusions along an abandoned road." },
-    { title: "Scream", year: 1996, rating: "7.4/10", platform: "Paramount+", plot: "A teenage girl and her friends are targeted by a masked killer obsessed with horror movies." },
-    { title: "Ghoul", year: 2018, rating: "7.1/10", platform: "Netflix", plot: "A newly appointed interrogator arrives at a secret detention center and encounters a demon." },
-    { title: "The Babadook", year: 2014, rating: "6.8/10", platform: "AMC+", plot: "A widowed mother and her son are tormented by a monster that manifests from a children's book." },
-    { title: "Phoonk", year: 2008, rating: "4.8/10", platform: "Prime Video", plot: "A skeptical businessman faces terrifying events when black magic targets his daughter." },
-    { title: "Psycho", year: 1960, rating: "8.5/10", platform: "Peacock", plot: "A secretary on the run checks into a remote motel run by a young man under his mother's control." },
-    { title: "Chhorii", year: 2021, rating: "6.8/10", platform: "Prime Video", plot: "A pregnant woman fleeing danger in the city takes shelter in a house surrounded by sugarcane fields." },
-    { title: "The Texas Chain Saw Massacre", year: 1974, rating: "7.4/10", platform: "Freevee", plot: "Friends visiting an old homestead fall victim to a family of cannibalistic outcasts." },
-    { title: "Kaatteri", year: 2022, rating: "5.4/10", platform: "Netflix", plot: "A gang seeking hidden treasure enters a hillside village overrun by vengeful spirits." },
-    { title: "It Follows", year: 2014, rating: "6.8/10", platform: "Paramount+", plot: "A young woman is pursued by a relentless supernatural entity passed through intimate encounters." },
-    { title: "Creature 3D", year: 2014, rating: "3.2/10", platform: "YouTube", plot: "A boutique hotel owner defends her guests against a giant man-eating beast." },
-    { title: "Sinister", year: 2012, rating: "6.8/10", platform: "Max", plot: "A true-crime writer finds home movies detailing brutal murders in his new house." },
-    { title: "Bulbbul", year: 2020, rating: "6.5/10", platform: "Netflix", plot: "A child bride grows into a enigmatic woman guarding painful secrets in her ancestral mansion." },
-    { title: "The Blair Witch Project", year: 1999, rating: "6.5/10", platform: "Hulu", plot: "Three film students disappear in the Maryland woods while shooting a documentary on a local legend." },
-    { title: "Vastu Shastra", year: 2004, rating: "6.2/10", platform: "Prime Video", plot: "A family moves into a secluded home surrounded by trees inhabited by spirits." },
-    { title: "The Cabin in the Woods", year: 2011, rating: "7.0/10", platform: "Max", plot: "Five college friends at a remote cabin fall victim to backwoods zombies controlled by technicians." },
-    { title: "Darna Zaroori Hai", year: 2006, rating: "4.8/10", platform: "Prime Video", plot: "Six children seek shelter in a haunted house where an old woman tells them scary tales." },
-    { title: "Don't Breathe", year: 2016, rating: "7.1/10", platform: "Prime Video", plot: "Thieves break into the house of a blind veteran, discovering he is far more dangerous than he appears." },
-    { title: "Ghost Stories", year: 2020, rating: "4.4/10", platform: "Netflix", plot: "An anthology of four short horror stories directed by acclaimed Indian filmmakers." },
-    { title: "Rosemary's Baby", year: 1968, rating: "8.0/10", platform: "Paramount+", plot: "A pregnant woman suspects her neighbors belong to a Satanic cult targeting her baby." },
-    { title: "Dobaara: See Your Evil", year: 2017, rating: "5.1/10", platform: "Prime Video", plot: "Siblings attempt to destroy a haunted mirror responsible for the death of their parents." },
-    { title: "Evil Dead Rise", year: 2023, rating: "6.5/10", platform: "Max", plot: "Reunion between sisters is cut short by flesh-possessing demons in a Los Angeles apartment." },
-    { title: "Naina", year: 2005, rating: "4.7/10", platform: "YouTube", plot: "A woman regains her sight following a corneal transplant and begins seeing terrifying visions." },
-    { title: "The Others", year: 2001, rating: "7.6/10", platform: "Prime Video", plot: "A woman living in a dark family house becomes convinced that her home is haunted." },
-    { title: "Shaapit", year: 2010, rating: "5.2/10", platform: "YouTube", plot: "A young man tries to break a generations-old family curse to marry his love." }
+    "The Conjuring", "Get Out", "Hereditary", "A Quiet Place", "The Exorcist",
+    "The Shining", "Halloween", "Alien", "The Thing", "It", "Ring", "Insidious",
+    "Paranormal Activity", "The Texas Chain Saw Massacre", "Psycho", "Midsommar",
+    "Tumbbad", "Stree", "Bhool Bhulaiyaa", "13B", "Raaz",
+    "1920", "Pari", "Bhoot", "Darna Mana Hai", "Ek Thi Daayan",
+    "Chhorii", "Pizza", "Ragini MMS", "Ghoul", "Kanchana",
+    "Sinister", "Cabin in the Woods", "Scream", "The Babadook", "The Witch",
+    "The Blair Witch Project", "Evil Dead Rise", "Talk to Me", "Barbarian", "Smile",
+    "Us", "Rec", "28 Days Later", "Dawn of the Dead", "Saw",
+    "Conjuring 2", "Lights Out", "Annabelle: Creation", "Don't Breathe"
   ],
-
   romcom: [
-    { title: "Jab We Met", year: 2007, rating: "7.9/10", platform: "Prime Video", plot: "A depressed businessman finds a new lease on life after meeting a bubbly, outspoken co-passenger." },
-    { title: "10 Things I Hate About You", year: 1999, rating: "7.3/10", platform: "Disney+", plot: "A high school boy hires a bad boy to date an abrasive girl so her younger sister can date." },
-    { title: "Yeh Jawaani Hai Deewani", year: 2013, rating: "7.2/10", platform: "Netflix", plot: "A trekking trip reconnects former classmates who learn about ambition, friendship, and love." },
-    { title: "Crazy Rich Asians", year: 2018, rating: "6.9/10", platform: "Max", plot: "A professor travels to Singapore to meet her boyfriend's ultra-wealthy, traditional family." },
-    { title: "Dilwale Dulhania Le Jayenge", year: 1995, rating: "8.0/10", platform: "Prime Video", plot: "Two young NRIs fall in love on a trip through Europe, but must win over the girl's traditional father." },
-    { title: "When Harry Met Sally...", year: 1989, rating: "7.7/10", platform: "Max", plot: "Two friends navigate love and career choices over twelve years while debating if men and women can be friends." },
-    { title: "Bareilly Ki Barfi", year: 2017, rating: "7.5/10", platform: "ZEE5", plot: "A free-spirited woman caught in a love triangle searches for the author of a life-changing novel." },
-    { title: "Notting Hill", year: 1999, rating: "7.2/10", platform: "Peacock", plot: "A British bookstore owner's life changes when a famous American movie star enters his shop." },
-    { title: "Band Baaja Baaraat", year: 2010, rating: "7.2/10", platform: "Prime Video", plot: "Two ambitious Delhi graduates launch a wedding planning business together and fall in love." },
-    { title: "Clueless", year: 1995, rating: "6.9/10", platform: "Paramount+", plot: "A popular high school student plays matchmaker for her friends while discovering her own feelings." },
-    { title: "Hum Tum", year: 2004, rating: "7.0/10", platform: "Prime Video", plot: "Two people continually encounter each other over several years, evolving from enemies to friends." },
-    { title: "500 Days of Summer", year: 2009, rating: "7.7/10", platform: "Hulu", plot: "A greeting card writer reflects on the 500 days spent in a relationship with a woman who doesn't believe in love." },
-    { title: "Jaane Tu... Ya Jaane Na", year: 2008, rating: "7.4/10", platform: "Netflix", plot: "Two best friends are convinced they aren't right for each other until they try dating other people." },
-    { title: "Pretty Woman", year: 1990, rating: "7.1/10", platform: "Disney+", plot: "A wealthy businessman hires an escort for social events, leading to an unexpected romance." },
-    { title: "Socha Na Tha", year: 2005, rating: "7.4/10", platform: "Prime Video", plot: "Two young adults reject an arranged marriage setup, only to become close friends and fall in love." },
-    { title: "The Proposal", year: 2009, rating: "6.8/10", platform: "Hulu", plot: "A pushy boss forces her assistant to marry her so she can avoid deportation to Canada." },
-    { title: "Cocktail", year: 2012, rating: "6.3/10", platform: "Eros Now", plot: "A love triangle forms between an impulsive party girl, her shy best friend, and a charming man." },
-    { title: "About Time", year: 2013, rating: "7.8/10", platform: "Prime Video", plot: "A young man with the ability to time travel tries to improve his romantic life." },
-    { title: "Hasee Toh Phasee", year: 2014, rating: "6.8/10", platform: "Netflix", plot: "A struggling businessman meets an eccentric scientist days before his wedding to her sister." },
-    { title: "Crazy, Stupid, Love.", year: 2011, rating: "7.4/10", platform: "Max", plot: "A recently separated man learns how to pick up women with help from a young bachelor." },
-    { title: "Shubh Mangal Saavdhan", year: 2017, rating: "6.9/10", platform: "ZEE5", plot: "A young couple copes with societal pressure and performance anxiety before their wedding." },
-    { title: "To All the Boys I've Loved Before", year: 2018, rating: "7.0/10", platform: "Netflix", plot: "A high school girl's secret love letters are accidentally mailed out to her former crushes." },
-    { title: "Namastey London", year: 2007, rating: "7.1/10", platform: "Prime Video", plot: "A British-born Indian woman is duped into an arranged marriage during a trip to India." },
-    { title: "Palm Springs", year: 2020, rating: "7.4/10", platform: "Hulu", plot: "Two wedding guests get stuck in a romantic time loop during a resort celebration." },
-    { title: "Love Aaj Kal", year: 2009, rating: "6.8/10", platform: "Eros Now", plot: "A modern couple breaks up amicably, comparing their relationship to an older love story." },
-    { title: "Set It Up", year: 2018, rating: "6.5/10", platform: "Netflix", plot: "Two overworked assistants scheme to trick their demanding bosses into falling in love." },
-    { title: "Wake Up Sid", year: 2009, rating: "7.6/10", platform: "Netflix", plot: "A lazy college student's life changes after he meets an aspiring writer from Kolkata." },
-    { title: "You've Got Mail", year: 1998, rating: "6.7/10", platform: "Max", plot: "Rival bookstore owners fall in love online without realizing each other's true identities." },
-    { title: "Sleepless in Seattle", year: 1993, rating: "6.8/10", platform: "Prime Video", plot: "A recent widower's son calls a radio show, catching the attention of an engaged journalist." },
-    { title: "Khoobsurat", year: 2014, rating: "6.4/10", platform: "Disney+ Hotstar", plot: "A quirky physiotherapist visits a strict royal family and falls for the reserved prince." },
-    { title: "Silver Linings Playbook", year: 2012, rating: "7.7/10", platform: "Prime Video", plot: "A man with bipolar disorder bonds with a young widow as they prepare for a dance contest." },
-    { title: "Tanu Weds Manu", year: 2011, rating: "5.5/10", platform: "Prime Video", plot: "An NRI doctor falls for a rebellious girl who doesn't want an arranged marriage." },
-    { title: "Bridget Jones's Diary", year: 2001, rating: "6.8/10", platform: "Paramount+", plot: "A British woman keeps a diary documenting her career, weight, and romantic misadventures." },
-    { title: "Badrinath Ki Dulhania", year: 2017, rating: "6.1/10", platform: "Prime Video", plot: "A wealthy man tries to win over an independent woman who dreams of becoming a flight attendant." },
-    { title: "Always Be My Maybe", year: 2019, rating: "6.8/10", platform: "Netflix", plot: "Childhood sweethearts reconnect 15 years later, navigating differences in their lifestyles." },
-    { title: "Luka Chuppi", year: 2019, rating: "6.3/10", platform: "JioCinema", plot: "A reporter and his partner decide to try a live-in relationship, leading to chaos with their families." },
-    { title: "My Best Friend's Wedding", year: 1997, rating: "6.3/10", platform: "Hulu", plot: "A woman realizes she's in love with her best friend when he announces his engagement." },
-    { title: "I Hate Luv Storys", year: 2010, rating: "5.7/10", platform: "Prime Video", plot: "A cynical assistant director working on a romance movie falls for a passionate designer." },
-    { title: "The Holiday", year: 2006, rating: "6.9/10", platform: "Hulu", plot: "Two single women swap homes across the Atlantic for Christmas and find unexpected love." },
-    { title: "Karwaan", year: 2018, rating: "7.6/10", platform: "Prime Video", plot: "Three strangers take a road trip together across South India delivering a misplaced package." },
-    { title: "Love, Simon", year: 2018, rating: "7.5/10", platform: "Hulu", plot: "A teenager navigates school life and family while keeping a secret online friendship." },
-    { title: "Ajab Prem Ki Ghazab Kahani", year: 2009, rating: "6.4/10", platform: "Prime Video", plot: "A goofy man helps the girl he loves marry someone else, unaware of her true feelings." },
-    { title: "Four Weddings and a Funeral", year: 1994, rating: "7.1/10", platform: "Max", plot: "A reserved Englishman keeps crossing paths with an American woman over various social events." },
-    { title: "Pyaar Ke Side Effects", year: 2006, rating: "6.7/10", platform: "YouTube", plot: "A man afraid of commitment tries to manage his relationship problems with his girlfriend." },
-    { title: "How to Lose a Guy in 10 Days", year: 2003, rating: "6.5/10", platform: "Paramount+", plot: "A magazine columnist and an ad executive start a relationship with secret, conflicting motives." },
-    { title: "Shubh Mangal Zyada Saavdhan", year: 2020, rating: "5.8/10", platform: "Prime Video", plot: "A gay couple struggles to gain social acceptance from a conservative family." },
-    { title: "Groundhog Day", year: 1993, rating: "8.0/10", platform: "AMC+", plot: "A cynical TV weatherman finds himself trapped in a time loop in a small Pennsylvania town." },
-    { title: "Dostana", year: 2008, rating: "6.5/10", platform: "Prime Video", plot: "Two men pretend to be a couple to rent an apartment, falling for their female roommate." },
-    { title: "Singin' in the Rain", year: 1952, rating: "8.3/10", platform: "Max", plot: "Silent movie stars navigate the challenging transition to talkies in Hollywood." },
-    { title: "Main Tera Hero", year: 2014, rating: "5.1/10", platform: "ZEE5", plot: "A small-town college student gets caught between a woman he loves and a gangster's daughter." }
+    "When Harry Met Sally", "10 Things I Hate About You", "Crazy Rich Asians", "The Proposal", "Notting Hill",
+    "500 Days of Summer", "About Time", "Clueless", "Pretty Woman", "How to Lose a Guy in 10 Days",
+    "To All the Boys I've Loved Before", "Crazy Stupid Love", "Set It Up", "Love Actually", "Always Be My Maybe",
+    "Jab We Met", "Yeh Jawaani Hai Deewani", "DDLJ", "Cocktail", "Jaane Tu... Ya Jaane Na",
+    "Band Baaja Baaraat", "Hum Tum", "Bareilly Ki Barfi", "Hasee Toh Phasee", "Sonu Ke Titu Ki Sweety",
+    "Main Tera Hero", "Badrinath Ki Dulhania", "Tanu Weds Manu", "2 States", "Ajab Prem Ki Ghazab Kahani",
+    "Socha Na Tha", "Love Aaj Kal", "Shuddh Desi Romance", "Namastey London", "Kal Ho Naa Ho",
+    "13 Going on 30", "She's the Man", "My Best Friend's Wedding", "Silver Linings Playbook", "Palm Springs",
+    "The Holiday", " Bridget Jones's Diary", "You've Got Mail", "Sleeping With Other People", "Warm Bodies",
+    "Roxanne", "Four Weddings and a Funeral", "Forgetting Sarah Marshall", "Midnight in Paris", "Sleepless in Seattle"
   ],
-
   scifi: [
-    { title: "Interstellar", year: 2014, rating: "8.7/10", platform: "Paramount+", plot: "A team of astronauts travels through a wormhole near Saturn in search of a new home for humanity." },
-    { title: "PK", year: 2014, rating: "8.1/10", platform: "Netflix", plot: "An innocent alien stranded on Earth raises questions about human dogmas and religious blind faith." },
-    { title: "Inception", year: 2010, rating: "8.8/10", platform: "Max", plot: "A thief enters people's subconscious through dream sharing to extract corporate secrets." },
-    { title: "Krrish", year: 2006, rating: "6.5/10", platform: "SonyLIV", plot: "A young man with inherited superpowers conceals his identity while fighting a corrupt scientist." },
-    { title: "Blade Runner 2049", year: 2017, rating: "8.0/10", platform: "Max", plot: "A replicant LAPD officer unearths a long-buried secret that could plunge society into chaos." },
-    { title: "Koi... Mil Gaya", year: 2003, rating: "7.1/10", platform: "Prime Video", plot: "A developmentally disabled man contacts an alien with his late father's equipment." },
-    { title: "The Matrix", year: 1999, rating: "8.7/10", platform: "Max", plot: "A hacker discovers reality is a simulated illusion designed by intelligent machines." },
-    { title: "Ra.One", year: 2011, rating: "4.8/10", platform: "Eros Now", plot: "A video game developer creates a villain who escapes into the physical world." },
-    { title: "Arrival", year: 2016, rating: "7.9/10", platform: "Paramount+", plot: "A linguistics professor leads a team translating alien communications after ships land worldwide." },
-    { title: "2.0", year: 2018, rating: "6.1/10", platform: "Prime Video", plot: "Dr. Vaseegaran reassembles the humanoid robot Chitti to defeat an avian creature." },
-    { title: "2001: A Space Odyssey", year: 1968, rating: "8.3/10", platform: "Max", plot: "Astronauts and a supercomputer embark on a mysterious space voyage following an alien discovery." },
-    { title: "Mr. India", year: 1987, rating: "7.7/10", platform: "ZEE5", plot: "A violin teacher discovers an invisibility watch invented by his father and fights a dictator." },
-    { title: "Dune", year: 2021, rating: "8.0/10", platform: "Max", plot: "A noble family becomes embroiled in a war for control over the galaxy's most valuable asset." },
-    { title: "Kalki 2898 AD", year: 2024, rating: "7.6/10", platform: "Prime Video / Netflix", plot: "In a post-apocalyptic world, a modern avatar descends to protect humanity from dark forces." },
-    { title: "Jurassic Park", year: 1993, rating: "8.2/10", platform: "Peacock", plot: "Cloned dinosaurs break free from their enclosures on a remote island theme park." },
-    { title: "Dashavtar", year: 2008, rating: "7.5/10", platform: "Prime Video", plot: "A scientist races across the globe to prevent a bio-weapon from falling into evil hands." },
-    { title: "Alien", year: 1979, rating: "8.5/10", platform: "Hulu", plot: "A space crew encounters a deadly alien predator that stalks them through their vessel." },
-    { title: "Robot (Enthiran)", year: 2010, rating: "7.1/10", platform: "Prime Video", plot: "A scientist creates an advanced robot that develops human emotions and turns rogue." },
-    { title: "Star Wars: Episode V - The Empire Strikes Back", year: 1980, rating: "8.7/10", platform: "Disney+", plot: "Luke Skywalker trains with Master Yoda while Darth Vader relentlessly pursues his friends." },
-    { title: "Cargo", year: 2019, rating: "5.7/10", platform: "Netflix", plot: "Demon agents transition human souls on a spaceship floating in space." },
-    { title: "E.T. the Extra-Terrestrial", year: 1982, rating: "7.9/10", platform: "Peacock", plot: "A gentle alien is stranded on Earth and helped by a young boy to return home." },
-    { title: "Action Replayy", year: 2010, rating: "4.2/10", platform: "Prime Video", plot: "A young man uses a time machine to travel to the 1970s and fix his parents' marriage." },
-    { title: "Minority Report", year: 2002, rating: "7.6/10", platform: "Paramount+", plot: "A specialized police officer in a future world is accused of a crime he hasn't committed yet." },
-    { title: "Teri Baaton Mein Aisa Ujha Jiya", year: 2024, rating: "6.3/10", platform: "Prime Video", plot: "A robotics engineer unexpectedly falls in love with an advanced female AI prototype." },
-    { title: "The Terminator", year: 1984, rating: "8.1/10", platform: "Max", plot: "A soldier travels back in time to stop an indestructible cyborg from killing a young woman." },
-    { title: "Aaaah / Creature Horror Sci-Fi Mix", year: 2014, rating: "5.1/10", platform: "YouTube", plot: "Scientists test experimental cures on remote test subjects with unintended side effects." },
-    { title: "Eternal Sunshine of the Spotless Mind", year: 2004, rating: "8.3/10", platform: "Peacock", plot: "An estranged couple undergoes a medical procedure to erase memories of each other." },
-    { title: "Love Story 2050", year: 2008, rating: "2.6/10", platform: "YouTube", plot: "A man travels to future Mumbai in the year 2050 to bring back his deceased partner." },
-    { title: "Ex Machina", year: 2014, rating: "7.7/10", platform: "Max", plot: "A programmer is invited to administer the Turing test to an intelligent humanoid robot." },
-    { title: "Jaane Hoga Kya", year: 2006, rating: "3.5/10", platform: "YouTube", plot: "A scientist clones himself, but the clone turns out to be evil and steals his life." },
-    { title: "Gravity", year: 2013, rating: "7.7/10", platform: "Max", plot: "Two medical engineers work together to survive after an accident leaves them stranded in space." },
-    { title: "Shivaay (Elements of Tech SciFi)", year: 2016, rating: "6.2/10", platform: "Prime Video", plot: "A skilled mountaineer fights human traffickers with high-tech gear across Europe." },
-    { title: "District 9", year: 2009, rating: "7.9/10", platform: "Prime Video", plot: "An agent contracts an alien virus while relocating extraterrestrial refugees in South Africa." },
-    { title: "Taarzan: The Wonder Car", year: 2004, rating: "4.8/10", platform: "Disney+ Hotstar", plot: "A young mechanic restores his father's car, which becomes possessed and seeks justice." },
-    { title: "Avatar", year: 2009, rating: "7.9/10", platform: "Disney+", plot: "A paraplegic Marine sent to Pandora becomes torn between following orders and protecting its world." },
-    { title: "C.K.kompany / Sci-Fi sub elements", year: 2008, rating: "4.5/10", platform: "ZEE5", plot: "Unlikely friends start a fake extortion ring using vocal modifiers and low-grade gadgetry." },
-    { title: "Edge of Tomorrow", year: 2014, rating: "7.9/10", platform: "Max", plot: "A soldier fighting alien invaders gets caught in a time loop, reliving the same battle repeatedly." },
-    { title: "Carbon (Short Film)", year: 2017, rating: "6.5/10", platform: "YouTube", plot: "In 2045, oxygen and water become scarce commodities, creating a futuristic black market." },
-    { title: "The Martian", year: 2015, rating: "8.0/10", platform: "Hulu", plot: "An astronaut is stranded on Mars and relies on his ingenuity to signal for rescue." },
-    { title: "Subramaniapuram (Tech/Period elements)", year: 2008, rating: "8.0/10", platform: "Prime Video", plot: "Friends in the 1980s navigate crime, betrayal, and dark political realities." },
-    { title: "Her", year: 2013, rating: "8.0/10", platform: "Max", plot: "A lonely writer develops an unlikely romantic relationship with an operating system." },
-    { title: "JL50", year: 2020, rating: "7.5/10", platform: "SonyLIV", plot: "CBI officers investigate a plane crash that was reported missing 35 years prior." },
-    { title: "Wall-E", year: 2008, rating: "8.4/10", platform: "Disney+", plot: "A small waste-collecting robot inadvertently embarks on a space journey that determines Earth's future." },
-    { title: "Okka Kshanam", year: 2017, rating: "7.0/10", platform: "Disney+ Hotstar", plot: "A man discovers that his life matches the exact events of a couple living a parallel timeline." },
-    { title: "Back to the Future", year: 1985, rating: "8.5/10", platform: "Peacock", plot: "A teenager accidentally travels back 30 years in a time-traveling DeLorean automobile." },
-    { title: "Aditya 369", year: 1991, rating: "8.4/10", platform: "Prime Video", plot: "Children enter a time machine created by a scientist and visit both ancient times and the future." },
-    { title: "Children of Men", year: 2006, rating: "7.9/10", platform: "Starz", plot: "In a sterile future, a bureaucrat helps transport a miraculously pregnant woman to safety." },
-    { title: "Maanaadu", year: 2021, rating: "8.2/10", platform: "SonyLIV", plot: "A man stuck in a time loop must prevent a political assassination at a public rally." },
-    { title: "Twelve Monkeys", year: 1995, rating: "8.0/10", platform: "Peacock", plot: "A convict is sent back in time to gather information about a deadly virus." },
-    { title: "Project Z", year: 2017, rating: "5.5/10", platform: "Prime Video", plot: "A detective uncovers a bizarre scientific experiment while investigating a series of murders." }
+    "Interstellar", "Inception", "The Matrix", "Blade Runner 2049", "Arrival",
+    "2001: A Space Odyssey", "Jurassic Park", "Star Wars: A New Hope", "Terminator", "Back to the Future",
+    "Eternal Sunshine of the Spotless Mind", "Ex Machina", "Alien", "Dune", "Avatar",
+    "Koi... Mil Gaya", "Krrish", "Ra.One", "PK", "2.0",
+    "Robot (Enthiran)", "Cargo", "Cargo", "Subedar Joginder Singh", "Shivam",
+    "The Wandering Earth", "Space Sweepers", "Snowpiercer", "Edge of Tomorrow", "Looper",
+    "Tenet", "Gravity", "District 9", "Minority Report", "The Martian", "Signs",
+    "Her", "Coherence", "Source Code", "Annihilation", "Dark City",
+    "Children of Men", "Oblivion", "Contact", "Tron: Legacy", "War of the Worlds",
+    "Star Trek", "Everything Everywhere All at Once", "Close Encounters of the Third Kind", "V for Vendetta"
   ],
-
   thriller: [
-    { title: "Andhadhun", year: 2018, rating: "8.2/10", platform: "Netflix", plot: "A blind pianist unwittingly gets drawn into a series of mysterious events surrounding a murder." },
-    { title: "Se7en", year: 1995, rating: "8.6/10", platform: "Max", plot: "Two detectives hunt a serial killer who uses the seven deadly sins as motives for his murders." },
-    { title: "Kahaani", year: 2012, rating: "8.1/10", platform: "Prime Video", plot: "A pregnant woman searches for her missing husband in Kolkata during the Durga Puja festival." },
-    { title: "Gone Girl", year: 2014, rating: "8.1/10", platform: "Max / Hulu", plot: "A man becomes the prime suspect in the media spotlight when his wife mysteriously disappears." },
-    { title: "Drishyam 2", year: 2022, rating: "8.2/10", platform: "Prime Video", plot: "Seven years after the original case, a renewed investigation threatens to expose Vijay's family." },
-    { title: "Shutter Island", year: 2010, rating: "8.2/10", platform: "Paramount+", plot: "A US Marshal travels to an asylum on a remote island to investigate a patient's disappearance." },
-    { title: "Ugly", year: 2013, rating: "7.9/10", platform: "ZEE5", plot: "The disappearance of a young girl reveals the greed, secrets, and motives of those searching for her." },
-    { title: "The Silence of the Lambs", year: 1991, rating: "8.6/10", platform: "Prime Video", plot: "A young FBI cadet seeks help from imprisoned cannibal Hannibal Lecter to catch a serial killer." },
-    { title: "Talaash", year: 2012, rating: "7.2/10", platform: "Netflix", plot: "A grieving police officer investigates a high-profile car accident leading to supernatural encounters." },
-    { title: "Memento", year: 2000, rating: "8.4/10", platform: "Prime Video", plot: "A man with short-term memory loss uses tattoos and notes to track down his wife's killer." },
-    { title: "A Wednesday!", year: 2008, rating: "8.1/10", platform: "Netflix", plot: "A common man places bombs across Mumbai, demanding the release of four convicted terrorists." },
-    { title: "Zodiac", year: 2007, rating: "7.7/10", platform: "Paramount+", plot: "A cartoonist becomes obsessed with unmasking San Francisco's notorious Zodiac Killer." },
-    { title: "Badla", year: 2019, rating: "7.7/10", platform: "Netflix", plot: "A lawyer questions an accused businesswoman to uncover what happened during a murder." },
-    { title: "The Prestige", year: 2006, rating: "8.5/10", platform: "Paramount+", plot: "Two rival magicians in London sacrifice everything to create the ultimate stage illusion." },
-    { title: "Ek Hasina Thi", year: 2004, rating: "7.5/10", platform: "Prime Video", plot: "A woman framed for a crime by her charming partner plans meticulous revenge from prison." },
-    { title: "Primal Fear", year: 1996, rating: "7.7/10", platform: "Paramount+", plot: "A defense attorney represents an altar boy accused of murdering an influential archbishop." },
-    { title: "NH10", year: 2015, rating: "7.2/10", platform: "ZEE5", plot: "A couple's road trip turns into a battle for survival after witnessing an honor killing." },
-    { title: "Black Swan", year: 2010, rating: "8.0/10", platform: "Hulu", plot: "A ballerina loses her grip on reality as pressure mounts before a major performance." },
-    { title: "Raat Akeli Hai", year: 2020, rating: "7.2/10", platform: "Netflix", plot: "A small-town cop investigates the murder of an elderly landlord on his wedding night." },
-    { title: "Prisoners", year: 2013, rating: "8.1/10", platform: "Netflix", plot: "A father takes matters into his own hands when his young daughter and her friend go missing." },
-    { title: "Table No. 21", year: 2013, rating: "7.1/10", platform: "Eros Now", plot: "A couple wins a trip to Fiji and agrees to play a live game show with deadly personal stakes." },
-    { title: "The Sixth Sense", year: 1999, rating: "8.2/10", platform: "Max", plot: "A child psychologist treats a young boy who communicates with spirits." },
-    { title: "Chup: Revenge of the Artist", year: 2022, rating: "7.8/10", platform: "ZEE5", plot: "A serial killer targets dishonest film critics, prompting a high-stakes police investigation." },
-    { title: "Oldboy", year: 2003, rating: "8.4/10", platform: "Prime Video", plot: "A man kidnapped and held captive for 15 years is suddenly released and seeks revenge." },
-    { title: "Manorama Six Feet Under", year: 2007, rating: "7.5/10", platform: "Netflix", plot: "An amateur detective hired to investigate an affair gets drawn into a political conspiracy." },
-    { title: "Rear Window", year: 1954, rating: "8.5/10", platform: "Peacock", plot: "A wheelchair-bound photographer spies on his neighbors and becomes convinced one committed murder." },
-    { title: "Game Over", year: 2019, rating: "7.0/10", platform: "Netflix", plot: "A game designer recovering from trauma must defend her home against mysterious intruders." },
-    { title: "Sicario", year: 2015, rating: "7.6/10", platform: "Prime Video", plot: "An FBI agent joins a government task force fighting an escalating drug war on the US-Mexico border." },
-    { title: "Ittefaq", year: 2017, rating: "7.2/10", platform: "Netflix", plot: "A police officer interviews two suspects with conflicting versions of a double murder night." },
-    { title: "Nightcrawler", year: 2014, rating: "7.8/10", platform: "Max", plot: "A motivated man enters the dangerous world of freelance crime journalism in Los Angeles." },
-    { title: "Gupt: The Hidden Truth", year: 1997, rating: "7.3/10", platform: "ZEE5", plot: "A man framed for his stepfather's murder escapes from prison to find the real killer." },
-    { title: "Drive", year: 2011, rating: "7.8/10", platform: "Prime Video", plot: "A stunt driver who works as a getaway driver tries to protect his neighbor from criminals." },
-    { title: "Haseen Dillruba", year: 2021, rating: "6.9/10", platform: "Netflix", plot: "A woman accused of murdering her husband tells police a story detailing their volatile marriage." },
-    { title: "The Game", year: 1997, rating: "7.7/10", platform: "Peacock", plot: "A wealthy banker participates in a mysterious game that integrates directly into his personal life." },
-    { title: "Khakee", year: 2004, rating: "7.4/10", platform: "YouTube", plot: "A team of police officers faces ambushes while escorting a suspect across the state." },
-    { title: "Misery", year: 1990, rating: "7.8/10", platform: "Max", plot: "A famous author is rescued from a car crash by an obsessive fan who holds him captive." },
-    { title: "Race", year: 2008, rating: "6.7/10", platform: "Netflix", plot: "Sibling rivalry, betrayal, and insurance fraud erupt between two wealthy half-brothers in Durban." },
-    { title: "The Invisible Guest", year: 2016, rating: "8.0/10", platform: "Netflix", plot: "A businessman works with a defense expert to build a defense after waking up next to his deceased lover." },
-    { title: "Karthik Calling Karthik", year: 2010, rating: "7.1/10", platform: "Netflix", plot: "A shy man receives late-night phone calls from someone claiming to be himself, giving him life advice." },
-    { title: "Run Lola Run", year: 1998, rating: "7.6/10", platform: "Prime Video", plot: "A woman has 20 minutes to obtain 100,000 Deutschmarks to save her boyfriend's life." },
-    { title: "Blood Money", year: 2012, rating: "5.7/10", platform: "ZEE5", plot: "An ambitious executive moves to South Africa and realizes his diamond firm acts as a front for terrorism." },
-    { title: "Mystic River", year: 2003, rating: "7.9/10", platform: "Max", plot: "Three childhood friends are reunited when the daughter of one of them is tragically murdered." },
-    { title: "Samay: When Time Strikes", year: 2003, rating: "7.2/10", platform: "YouTube", plot: "A police officer races against time to catch a serial killer who leaves clues tied to time." },
-    { title: "Ex Machina", year: 2014, rating: "7.7/10", platform: "Max", plot: "A programmer evaluates a human-like AI robot at a secluded estate, leading to deception." },
-    { title: "Taxi No. 9211", year: 2006, rating: "7.2/10", platform: "Prime Video", plot: "An arrogant businessman and a hot-tempered taxi driver get into a destructive rivalry." },
-    { title: "A Quiet Place", year: 2018, rating: "7.5/10", platform: "Paramount+", plot: "A family lives in total silence to escape extraterrestrial creatures that hunt by sound." },
-    { title: "Bluffmaster!", year: 2005, rating: "6.7/10", platform: "Prime Video", plot: "A con man diagnosed with a terminal illness decides to help his apprentice pull off one last heist." },
-    { title: "Don't Breathe", year: 2016, rating: "7.1/10", platform: "Prime Video", plot: "Thieves break into a blind man's house, finding themselves trapped inside with a skilled killer." },
-    { title: "Bhramaram", year: 2009, rating: "7.4/10", platform: "Disney+ Hotstar", plot: "A mysterious stranger enters a man's life, seeking retribution for a past injustice." },
-    { title: "The Girl with the Dragon Tattoo", year: 2011, rating: "7.8/10", platform: "Max", plot: "A journalist and a computer hacker investigate a woman's disappearance forty years prior." }
+    "Gone Girl", "Prisoners", "Shutter Island", "The Silence of the Lambs", "Se7en",
+    "Zodiac", "Black Swan", "The Prestige", "The Sixth Sense", "Memento",
+    "Oldboy", "Rear Window", "Knives Out", "Parasite", "Get Out",
+    "Kahaani", "Andhadhun", "Drishyam", "Talaash", "Race",
+    "Gupt", "Ek Hasina Thi", "Badla", "Hate Story", "Darr", "Baazigar",
+    "Table No. 21", "A Wednesday!", "Kartik Calling Kartik", "NH10", "Manorama Six Feet Under",
+    "Ugly", "404: Error Not Found", "Ratsasan", "Drishyam 2", "Game Over",
+    "Uncut Gems", "Nightcrawler", "Sicario", "The Game", "Misery",
+    "A Quiet Place", "Ex Machina", "Coherence", "Don't Breathe", "Run",
+    "Searching", "Missing", "The Invisible Man", "Identity"
   ]
 };
 
-// Selection handler
-function pickMovie(selectedGenre) {
-  const displayElement = document.getElementById('movie-display');
-  const movieList = moviesDatabase[selectedGenre];
+function pickMovie(genre) {
+  const display = document.getElementById('movie-display');
+  const movies = movieData[genre];
 
-  if (!movieList || movieList.length === 0) return;
+  if (!movies || movies.length === 0) return;
 
-  // Audio start
+  // 1. Play Shuffle Sound
   shuffleSound.currentTime = 0;
-  shuffleSound.play().catch(e => console.log("Audio play deferred:", e));
+  shuffleSound.play().catch(err => console.log("Audio play allowed after click:", err));
 
-  // Visual shuffle cycle for 2.5 seconds
   let counter = 0;
-  const shuffleInterval = setInterval(() => {
-    const tempMovie = movieList[Math.floor(Math.random() * movieList.length)];
-    displayElement.innerHTML = `<div style="font-size:1.3rem;">Shuffling... 🎬 ${tempMovie.title}</div>`;
+  const maxShuffles = 18;
+  
+  // 2. Rapidly cycle through random titles
+  const interval = setInterval(() => {
+    const randomIndex = Math.floor(Math.random() * movies.length);
+    display.innerHTML = `<h2 style="font-size: 1.8rem; color: #93c5fd; transition: all 0.1s ease;">${movies[randomIndex]}</h2>`;
     counter++;
-  }, 100);
 
-  // Stop shuffle & pick final movie
-  setTimeout(() => {
-    clearInterval(shuffleInterval);
-    shuffleSound.pause();
-    shuffleSound.currentTime = 0;
+    if (counter >= maxShuffles) {
+      clearInterval(interval);
+      
+      // Final Pick
+      const finalPick = movies[Math.floor(Math.random() * movies.length)];
+      display.innerHTML = `
+        <div style="animation: popIn 0.3s ease;">
+          <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: #38bdf8; font-weight: bold;">Your CinePick</span>
+          <h2 style="font-size: 2.2rem; margin-top: 8px; color: #ffffff; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);">${finalPick}</h2>
+        </div>
+      `;
 
-    const selected = movieList[Math.floor(Math.random() * movieList.length)];
+      // 3. Play Beep Sound
+      beepSound.currentTime = 0;
+      beepSound.play().catch(err => console.log("Beep error:", err));
 
-    // Beep sound trigger
-    beepSound.currentTime = 0;
-    beepSound.play().catch(e => console.log("Audio play deferred:", e));
-
-    // Render formatted movie details
-    displayElement.innerHTML = `
-      <div style="text-align: left; width: 100%;">
-        <h2 style="color: #7dd3fc; margin-bottom: 0.5rem; font-size: 1.5rem;">🎬 ${selected.title} (${selected.year})</h2>
-        <p style="margin-bottom: 0.4rem;"><strong>⭐ IMDb Rating:</strong> ${selected.rating}</p>
-        <p style="margin-bottom: 0.4rem;"><strong>📺 Where to Watch:</strong> ${selected.platform}</p>
-        <p style="line-height: 1.4; font-size: 0.95rem; opacity: 0.95;"><strong>📖 Plot:</strong> ${selected.plot}</p>
-      </div>
-    `;
-
-    // Confetti animation
-    if (typeof confetti === 'function') {
-      confetti({
-        particleCount: 120,
-        spread: 80,
-        origin: { y: 0.6 }
-      });
+      // 4. Trigger Canvas Confetti
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 80,
+          origin: { y: 0.6 }
+        });
+      }
     }
-  }, 2500);
+  }, 90);
 }
