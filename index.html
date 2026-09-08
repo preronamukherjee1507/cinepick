@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CinePick</title>
-  <!-- Canvas Confetti Library -->
+  <!-- Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
@@ -58,7 +58,7 @@
       margin-bottom: 35px;
     }
 
-    /* Glossy Blue Bubble Buttons Grid */
+    /* 8 Genre Grid Container */
     .genre-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -66,6 +66,7 @@
       margin-bottom: 35px;
     }
 
+    /* Glossy Bubble Button Styling */
     .bubble-btn {
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.6));
       border: 2px solid rgba(147, 197, 253, 0.4);
@@ -73,7 +74,7 @@
       padding: 16px 20px;
       font-size: 1rem;
       font-weight: 600;
-      border-radius: 50px; /* Glossy Bubble Shape */
+      border-radius: 50px;
       cursor: pointer;
       backdrop-filter: blur(8px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.3);
@@ -91,7 +92,7 @@
       transform: translateY(-1px);
     }
 
-    /* Movie Result Card Display */
+    /* Movie Result Container */
     #movie-display {
       min-height: 160px;
       background: rgba(30, 41, 59, 0.8);
@@ -117,7 +118,7 @@
     <h1>🎬 CinePick</h1>
     <p class="subtitle">Pick a genre to unveil your movie choice!</p>
 
-    <!-- 8 Core Genres in Bubble Buttons -->
+    <!-- The 8 Core Genre Bubble Buttons -->
     <div class="genre-grid">
       <button class="bubble-btn" onclick="pickMovie('action')">💥 Action</button>
       <button class="bubble-btn" onclick="pickMovie('comedy')">😂 Comedy</button>
@@ -129,13 +130,12 @@
       <button class="bubble-btn" onclick="pickMovie('thriller')">⚡ Thriller</button>
     </div>
 
-    <!-- Live Display Box for Shuffling, Sounds, and Result -->
+    <!-- Live Display Box for Shuffling and Final Result -->
     <div id="movie-display">
       <div class="placeholder-text">Click any bubble above to start!</div>
     </div>
   </div>
 
-  <!-- External Script containing the Database, Shuffle Audio, Beep, and Confetti Logic -->
   <script src="script.js"></script>
 </body>
 </html>
