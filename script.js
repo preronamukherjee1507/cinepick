@@ -2,7 +2,7 @@
 const shuffleSound = new Audio('shuffle.mp3');
 const beepSound = new Audio('beep.mp3');
 
-// 50 Movies Per Genre (Title, Description, Rating, Platform)
+// Movies Database
 const movieData = {
   romcom: [
     { title: "Jab We Met", desc: "A depressed businessman finds a new lease on life after meeting a free-spirited Punjabi girl on a train.", rating: "7.9 ⭐", watch: "Netflix / JioCinema" },
@@ -187,297 +187,27 @@ const movieData = {
     { title: "Fukrey", desc: "Four college slackers seek quick money through lottery dreams, getting entangled with a tough female gangster.", rating: "7.0 ⭐", watch: "Amazon Prime Video" },
     { title: "21 Jump Street", desc: "Two youthful-looking police officers go undercover at a local high school to bust a synthetic drug ring.", rating: "7.2 ⭐", watch: "Netflix" },
     { title: "Delhi Belly", desc: "Three roommates accidentally become targets of a ruthless smuggler when a package of smuggled diamonds gets swapped.", rating: "7.5 ⭐", watch: "Netflix" },
-    { title: "Ferris Bueller's Day Off", desc: "A high school wise-guy fakes an illness to spend a glorious day off in Chicago with his friends.", rating: "7.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Bala", desc: "A young man suffers from premature balding and tries every absurd remedy to win back his confidence.", rating: "7.3 ⭐", watch: "Disney+ Hotstar" },
-    { title: "The Big Lebowski", desc: "An easygoing bowler named 'The Dude' is mistaken for a millionaire and dragged into a bizarre kidnapping case.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Piku", desc: "A road trip from Delhi to Kolkata brings a quirky daughter and her aging, constipated father closer together.", rating: "7.6 ⭐", watch: "SonyLIV" },
-    { title: "Airplane!", desc: "A traumatized former pilot must safely land a commercial flight after the crew suffers food poisoning.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Badhaai Ho", desc: "An adult man is embarrassed to learn his middle-aged mother is unexpectedly pregnant.", rating: "7.9 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Hot Fuzz", desc: "A top London police officer is reassigned to a sleepy village that hides a dark, deadly conspiracy.", rating: "7.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Go Goa Gone", desc: "Three friends visiting a rave party on an isolated island in Goa wake up to find it infested with zombies.", rating: "7.0 ⭐", watch: "Eros Now" },
-    { title: "Zoolander", desc: "A clueless male fashion model is brainwashed to assassinate the Prime Minister of Malaysia.", rating: "6.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "Dream Girl", desc: "A man with a talent for imitating female voices gets a job at an adult chat hotline, gaining obsessed fans.", rating: "7.0 ⭐", watch: "ZEE5" },
-    { title: "Borat", desc: "A Kazakh journalist travels to America to make a documentary, causing chaos everywhere he goes.", rating: "7.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "Chup Chup Ke", desc: "A debt-ridden fisherman fakes his death and ends up working in a Gujarati household while pretending to be mute.", rating: "7.0 ⭐", watch: "Netflix" },
-    { title: "Game Night", desc: "A group of friends who meet for game nights find themselves in a real mystery when a kidnapping occurs.", rating: "7.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Good Newwz", desc: "Two couples with the same surname undergo IVF treatment, only to discover their sperm samples were swapped.", rating: "6.8 ⭐", watch: "ZEE5" },
-    { title: "The Nice Guys", desc: "In 1970s Los Angeles, a mismatched pair of private eyes investigate the missing girl and death of a porn star.", rating: "7.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "Dolly Ke Doli", desc: "A clever bride marries wealthy men, drugs them on the wedding night, and escapes with their money.", rating: "5.3 ⭐", watch: "Disney+ Hotstar" },
-    { title: "What We Do in the Shadows", desc: "A documentary crew follows four vampire roommates living together in modern-day Wellington.", rating: "7.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "Total Dhamaal", desc: "A group of eccentric people race against time and each other to reach a hidden $50 million cache in a zoo.", rating: "5.1 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Booksmart", desc: "Two academic overachievers realize they missed out on fun and try to cram four years of partying into one night.", rating: "7.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Housefull", desc: "An unlucky man attempts to find true love, creating hilarious misunderstandings in a grand UK mansion.", rating: "5.5 ⭐", watch: "Eros Now" },
-    { title: "Easy A", desc: "A clean-cut high school student relies on the school rumor mill to advance her social standing.", rating: "7.0 ⭐", watch: "Netflix" },
-    { title: "No Entry", desc: "Three married men get entangled in lie after lie to hide their affairs from their suspicious wives.", rating: "6.6 ⭐", watch: "ZEE5" },
-    { title: "We're the Millers", desc: "A veteran pot dealer creates a fake family to move a massive shipment of weed across the Mexican border.", rating: "7.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "All the Best: Fun Begins", desc: "A struggling musician lies to his wealthy brother about being married, sparking non-stop confusion.", rating: "6.2 ⭐", watch: "JioCinema" },
-    { title: "Dodgeball: A True Underdog Story", desc: "A group of misfits enter a Las Vegas dodgeball tournament to save their cherished local gym.", rating: "6.7 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Partner", desc: "A love guru helps a clumsy man win the heart of a wealthy heiress, but runs into trouble with his own crush.", rating: "5.8 ⭐", watch: "Eros Now" },
-    { title: "School of Rock", desc: "A struggling rock guitarist poses as a substitute teacher and turns his class into a rock band.", rating: "7.2 ⭐", watch: "Amazon Prime Video" }
-  ],
-
-  drama: [
-    { title: "The Shawshank Redemption", desc: "Two imprisoned men bond over a number of years, finding solace and eventual redemption.", rating: "9.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "Swades", desc: "A successful Indian NASA scientist returns to his native village, discovering his true roots.", rating: "8.2 ⭐", watch: "Netflix" },
-    { title: "Fight Club", desc: "An insomniac office worker and a soap salesman form an underground fight club that evolves into chaos.", rating: "8.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Taare Zameen Par", desc: "An 8-year-old boy suffering from dyslexia is helped by an empathetic art teacher to unleash his potential.", rating: "8.3 ⭐", watch: "Netflix" },
-    { title: "Forrest Gump", desc: "The presidencies of Kennedy and Johnson, the Vietnam War, and other history unfold through the perspective of an Alabama man.", rating: "8.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Udaan", desc: "A teenager expelled from boarding school returns home to an oppressive father and a half-brother he didn't know.", rating: "8.1 ⭐", watch: "Netflix" },
-    { title: "Whiplash", desc: "A promising young drummer enrolls at a cutthroat music conservatory under an abusive instructor.", rating: "8.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "Anand", desc: "A terminally ill man teaches a gloomy doctor how to embrace life's joys before his time runs out.", rating: "8.1 ⭐", watch: "SonyLIV" },
-    { title: "12 Angry Men", desc: "A jury holdout attempts to prevent a miscarriage of justice by forcing his colleagues to reconsider evidence.", rating: "9.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "The Lunchbox", desc: "A mistaken delivery in Mumbai's lunchbox delivery system connects a lonely housewife to an elderly widower.", rating: "7.8 ⭐", watch: "Netflix" },
-    { title: "Schindler's List", desc: "In German-occupied Poland, industrialist Oskar Schindler becomes concerned for his Jewish workforce during WWII.", rating: "9.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Bhaag Milkha Bhaag", desc: "The inspiring true story of Milkha Singh, an Indian athlete who overcame civil war trauma to become an Olympian.", rating: "8.2 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Good Will Hunting", desc: "Will Hunting, a janitor at M.I.T., has a gift for mathematics, but needs help from a psychologist to find direction.", rating: "8.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "Dangal", desc: "Former wrestler Mahavir Singh Phogat trains his daughters Geeta and Babita to become world-class wrestlers.", rating: "8.3 ⭐", watch: "Netflix" },
-    { title: "Parasite", desc: "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kims.", rating: "8.5 ⭐", watch: "SonyLIV" },
-    { title: "Masaan", desc: "Two seemingly separate stories in Varanasi explore small-town morality, grief, and caste dynamics.", rating: "8.1 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Dead Poets Society", desc: "An unconventional English teacher inspires his students to look at poetry and life from different perspectives.", rating: "8.1 ⭐", watch: "Disney+ Hotstar" },
-    { title: "October", desc: "A hotel management intern forms an unconditional, quiet obsession with a fellow intern who suffers a coma.", rating: "7.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "The Social Network", desc: "As Harvard student Mark Zuckerberg creates Facebook, he faces lawsuits from former friends.", rating: "7.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Sardar Udham", desc: "The biographical story of Udham Singh, a revolutionary who assassinated Michael O'Dwyer in London to avenge the Jallianwala Bagh massacre.", rating: "8.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "A Beautiful Mind", desc: "After John Nash, a brilliant but asocial mathematician, accepts secret work in cryptography, his life takes a tragic turn.", rating: "8.2 ⭐", watch: "Amazon Prime Video" },
-    { title: "Lagaan", desc: "Villagers in Victorian India bet their future on a game of cricket against ruthless British officers to avoid taxes.", rating: "8.1 ⭐", watch: "Netflix" },
-    { title: "The Prestige", desc: "After a tragic accident, two stage magicians in 1890s London engage in a battle to create the ultimate illusion.", rating: "8.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "Haider", desc: "A young man returns to Kashmir amid political turmoil to seek answers about his father's disappearance.", rating: "8.0 ⭐", watch: "ZEE5" },
-    { title: "Green Book", desc: "A working-class Italian-American bouncer becomes the driver for an African-American classical pianist on a tour through the 1960s South.", rating: "8.2 ⭐", watch: "Amazon Prime Video" },
-    { title: "Rockstar", desc: "Janardhan seeks heartbreak to fuel his musical passions, transforming into the angsty rock icon Jordan.", rating: "7.7 ⭐", watch: "Eros Now" },
-    { title: "La La Land", desc: "While navigating their careers in Los Angeles, a pianist and an actress fall in love while pursuing their dreams.", rating: "8.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Tamasha", desc: "Ved loses his true self to corporate monotony until a chance encounter helps him rediscover his passion for storytelling.", rating: "7.3 ⭐", watch: "ZEE5" },
-    { title: "Marriage Story", desc: "A stage director and his actor wife struggle through a grueling, bi-coastal divorce that pushes them to their limits.", rating: "7.9 ⭐", watch: "Netflix" },
-    { title: "Wake Up Sid", desc: "A spoiled, careless college student undergoes a transformation when an independent writer moves into his life.", rating: "7.6 ⭐", watch: "Netflix" },
-    { title: "The Truman Show", desc: "An insurance salesman discovers his entire life is actually a reality television show broadcast globally.", rating: "8.2 ⭐", watch: "Amazon Prime Video" },
-    { title: "Zindagi Na Milegi Dobara", desc: "Three friends go on a road trip in Spain, facing their deepest fears and resolving life conflict.", rating: "8.2 ⭐", watch: "Netflix" },
-    { title: "Room", desc: "Held captive for years in an enclosed space, a woman and her young son gain freedom, letting the boy experience the outside world.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Dil Chahta Hai", desc: "Three close college friends with contrasting personalities navigate adult relationships and growing apart.", rating: "8.1 ⭐", watch: "Netflix" },
-    { title: "Spotlight", desc: "The true story of how the Boston Globe uncovered the massive scandal of child molestation within the local Catholic Archdiocese.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Gulably Gang", desc: "A fierce woman forms a gang of women dressed in pink saris to fight against domestic abuse and political corruption.", rating: "6.1 ⭐", watch: "ZEE5" },
-    { title: "Cast Away", desc: "A FedEx executive undergoes a physical and emotional transformation after crash-landing on a deserted island.", rating: "7.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Chak De! India", desc: "A disgraced former hockey star coaches the Indian women's national hockey team to international glory.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Before Sunrise", desc: "A young American man and a French woman meet on a train in Europe and spend one romantic evening together in Vienna.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Kapoor & Sons", desc: "A dysfunctional family reunites in Coonoor, revealing long-kept secrets and financial crises as their grandfather nears death.", rating: "7.7 ⭐", watch: "Netflix" },
-    { title: "The Grand Budapest Hotel", desc: "A famous concierge and his trusted lobby boy become involved in the theft of a priceless Renaissance painting.", rating: "8.1 ⭐", watch: "Disney+ Hotstar" },
-    { title: "My Name Is Khan", desc: "An Indian Muslim man with Asperger's syndrome embarks on a journey across America to meet the President.", rating: "7.9 ⭐", watch: "Amazon Prime Video" },
-    { title: "The Revenant", desc: "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead.", rating: "8.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Guzaarish", desc: "A paralyzed magician files a petition in court seeking permission to end his own life via euthanasia.", rating: "7.4 ⭐", watch: "Netflix" },
-    { title: "Sound of Metal", desc: "A heavy-metal drummer's life is thrown into chaos when he rapidly loses his hearing and must adapt to a deaf community.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Black", desc: "A deaf-blind girl learns to communicate through the relentless dedication of an alcoholic teacher.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Manchester by the Sea", desc: "A depressed uncle is asked to take care of his teenage nephew after the boy's father dies.", rating: "7.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Pad Man", desc: "The true story of a rural social entrepreneur who creates low-cost sanitary pads for women in India.", rating: "7.9 ⭐", watch: "ZEE5" },
-    { title: "Birdman", desc: "A washed-up superhero actor attempts to revive his fading career by writing, directing, and starring in a Broadway play.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Sky Is Pink", desc: "A couple tells the tragic yet romantic story of their 25-year marriage through the eyes of their terminally ill daughter.", rating: "7.6 ⭐", watch: "Netflix" }
-  ],
-
-  horror: [
-    { title: "Tumbbad", desc: "A mythological horror story about a family who builds a shrine for Hastar, a monster who should never be worshipped.", rating: "8.2 ⭐", watch: "Amazon Prime Video" },
-    { title: "The Conjuring", desc: "Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse.", rating: "7.5 ⭐", watch: "JioCinema" },
-    { title: "Get Out", desc: "A young African-American visits his white girlfriend's parents for the weekend, uncovering a disturbing conspiracy.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Stree", desc: "In a small town, an evil female spirit abducts lonely men at night during an annual festival.", rating: "7.5 ⭐", watch: "Netflix" },
-    { title: "Hereditary", desc: "A grieving family is haunted by tragic and disturbing occurrences after the death of their secretive grandmother.", rating: "7.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "13B: Fear Has a New Address", desc: "A man experiences supernatural events in his new apartment that mirror the exact storyline of a TV soap opera.", rating: "7.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "A Quiet Place", desc: "A family must navigate their lives in absolute silence to avoid mysterious blind creatures that hunt by sound.", rating: "7.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "Bhool Bhulaiyaa", desc: "An NRI couple stays in an ancestral palace, accidentally releasing the vengeful spirit of an ancient dancer.", rating: "7.4 ⭐", watch: "Netflix" },
-    { title: "The Exorcist", desc: "When a young girl is possessed by a mysterious entity, her mother seeks the help of two Catholic priests.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Raaz", desc: "A couple moves to Ooty to save their failing marriage, only to find their bungalow haunted by a malevolent ghost.", rating: "6.6 ⭐", watch: "YouTube" },
-    { title: "The Shining", desc: "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.", rating: "8.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "1920", desc: "A married couple moves into a haunted mansion in 1920, where the wife becomes violently possessed by a demonic spirit.", rating: "6.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "Halloween", desc: "Fifteen years after murdering his sister, Michael Myers escapes from a mental hospital and returns to his hometown.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Pari", desc: "A kind man tries to help a abused, feral woman found chained in a forest, unaware she belongs to a demonic cult.", rating: "6.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "Alien", desc: "The crew of a commercial spacecraft encounters a deadly, aggressive extraterrestrial life form.", rating: "8.5 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Bhoot", desc: "A couple moves into a high-rise apartment in Mumbai, unaware that the previous tenant committed suicide after killing her son.", rating: "6.5 ⭐", watch: "ZEE5" },
-    { title: "The Thing", desc: "A research team in Antarctica encounters a shape-shifting alien entity that assumes the appearance of its victims.", rating: "8.2 ⭐", watch: "Amazon Prime Video" },
-    { title: "Darna Mana Hai", desc: "Six friends stranded in a dark forest tell six terrifying ghost stories around a campfire.", rating: "6.3 ⭐", watch: "YouTube" },
-    { title: "It", desc: "A group of bullied kids band together to face a shape-shifting monster that takes the form of an evil clown named Pennywise.", rating: "7.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "Ek Thi Daayan", desc: "A magician suffers from terrifying hallucinations caused by a witch who ruined his childhood.", rating: "5.8 ⭐", watch: "Balaji" },
-    { title: "The Ring", desc: "A journalist must investigate a cursed videotape that seems to cause the death of anyone within seven days of viewing it.", rating: "7.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Chhorii", desc: "A pregnant woman fleeing danger in the city takes shelter in a rural house surrounded by haunted sugarcane fields.", rating: "6.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Insidious", desc: "A family looks to prevent dark spirits from trapping their comatose child in a realm called The Further.", rating: "6.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Pizza", desc: "A pizza delivery boy arrives at a bungalow for a delivery, only to uncover a gruesome murder scene and ghosts.", rating: "8.0 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Paranormal Activity", desc: "After moving into a suburban home, a young couple becomes increasingly disturbed by a nightly demonic presence.", rating: "6.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "Ghoul", desc: "A newly appointed interrogator arrives at a secret military detention center, realizing a prisoner has summoned a demonic entity.", rating: "7.0 ⭐", watch: "Netflix" },
-    { title: "Midsommar", desc: "A couple travels to Sweden to visit their friend's rural hometown for its midsummer festival, entering a pagan cult.", rating: "7.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Ragini MMS", desc: "A couple spends a weekend at a deserted farmhouse, where cameras catch terrifying paranormal activity.", rating: "4.9 ⭐", watch: "Balaji" },
-    { title: "Sinister", desc: "A true-crime writer finds a box of super 8 home movies in his new house that reveal a series of horrific murders.", rating: "6.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Bhoot: Part One - The Haunted Ship", desc: "A bereaved sea officer investigates an abandoned, haunted container ship that washes ashore in Mumbai.", rating: "5.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "The Cabin in the Woods", desc: "Five college students go for a weekend in an isolated cabin, falling victim to underground technicians running a ritual.", rating: "7.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Darna Zaroori Hai", desc: "Five children seek shelter in a haunted house where an old woman tells them six horrifying tales.", rating: "4.8 ⭐", watch: "YouTube" },
-    { title: "Scream", desc: "A teenage girl and her friends become targets of a masked killer who uses horror movie trivia as part of his deadly game.", rating: "7.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "Kaatteri", desc: "A gang of bumbling treasure hunters enter an abandoned village infested with vengeful spirits.", rating: "5.2 ⭐", watch: "Netflix" },
-    { title: "The Babadook", desc: "A single mother and her child fall into a deep well of paranoia when a eerie children's book pops up in their home.", rating: "6.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Game Over", desc: "A wheelchair-bound woman battling PTSD must defend her home against three masked intruders.", rating: "7.0 ⭐", watch: "Netflix" },
-    { title: "The Witch", desc: "In 1630s New England, a puritan family is torn apart by forces of witchcraft, black magic, and possession.", rating: "6.9 ⭐", watch: "Amazon Prime Video" },
-    { title: "Lupt", desc: "A family taking a road trip takes a deserted shortcut, encountering deadly supernatural phenomena.", rating: "4.8 ⭐", watch: "ZEE5" },
-    { title: "Evil Dead Rise", desc: "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons.", rating: "6.5 ⭐", watch: "JioCinema" },
-    { title: "Dobaara: See Your Evil", desc: "Two siblings attempt to destroy a haunted mirror that killed their parents years prior.", rating: "5.1 ⭐", watch: "Netflix" },
-    { title: "Talk to Me", desc: "A group of friends discover how to conjure spirits using an embalmed hand, unlocking a terrifying portal.", rating: "7.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "The House Next Door", desc: "A brain surgeon and his wife live happily until a new family moves next door, bringing supernatural terror.", rating: "6.8 ⭐", watch: "Netflix" },
-    { title: "Barbarian", desc: "A woman staying at an Airbnb discovers that the house has double booked and harbors a dark secret in the basement.", rating: "7.0 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Anek", desc: "An undercover cop navigates political and militant instability in Northeast India to bring about peace.", rating: "6.5 ⭐", watch: "Netflix" },
-    { title: "Smile", desc: "After witnessing a bizarre, traumatic incident involving a patient, a psychiatrist starts experiencing terrifying smiles.", rating: "6.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "Click", desc: "A photographer and his girlfriend begin discovering mysterious urban shadows in their developed photos after an accident.", rating: "5.2 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Us", desc: "A family's serene beach vacation turns to chaos when their exact doppelgängers appear and attack them.", rating: "6.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Fear 1.0", desc: "A man attempts to overcome his deep phobias by entering an experimental facility, only to face literal demons.", rating: "5.0 ⭐", watch: "ZEE5" },
-    { title: "Don't Breathe", desc: "Three thieves break into the house of a blind man, thinking it's an easy heist, only to discover he's a lethal killer.", rating: "7.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "The Blair Witch Project", desc: "Three film students vanish in a Maryland forest while tracking down the Blair Witch legend, leaving behind terrifying footage.", rating: "6.5 ⭐", watch: "Amazon Prime Video" }
-  ],
-
-  scifi: [
-    { title: "Interstellar", desc: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.", rating: "8.7 ⭐", watch: "JioCinema" },
-    { title: "Inception", desc: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea.", rating: "8.8 ⭐", watch: "JioCinema" },
-    { title: "The Matrix", desc: "A computer hacker discovers reality as he knows it is a simulated illusion created by intelligent machines.", rating: "8.7 ⭐", watch: "JioCinema" },
-    { title: "Blade Runner 2049", desc: "A young Blade Runner discovers a long-buried secret that leads him to track down former Blade Runner Rick Deckard.", rating: "8.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Koi... Mil Gaya", desc: "A developmentally disabled young man uses his late scientist father's computer to accidentally contact aliens.", rating: "7.1 ⭐", watch: "ZEE5" },
-    { title: "Arrival", desc: "A linguist works with the military to communicate with alien lifeforms after twelve mysterious craft appear globally.", rating: "7.9 ⭐", watch: "Amazon Prime Video" },
-    { title: "Krrish", desc: "Krishna inherits his father's alien-gifted superpowers and must conceal his identity until a scientist threatens the world.", rating: "6.5 ⭐", watch: "SonyLIV" },
-    { title: "Jurassic Park", desc: "A pragmatic paleontologist visiting an island theme park is tasked with protecting two kids when dinosaurs break free.", rating: "8.2 ⭐", watch: "Amazon Prime Video" },
-    { title: "PK", desc: "An alien stranded on Earth loses his communication device and questions human religious blind faith to find it.", rating: "8.1 ⭐", watch: "SonyLIV" },
-    { title: "Terminator 2: Judgment Day", desc: "A reprogrammed cyborg is sent back in time to protect a young boy who will lead the future resistance against machines.", rating: "8.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "Ra.One", desc: "A developer creates a virtual reality game villain that escapes into the real world to track down his son.", rating: "4.8 ⭐", watch: "Eros Now" },
-    { title: "Back to the Future", desc: "Marty McFly is accidentally sent thirty years into the past in a time-traveling DeLorean invented by his eccentric friend.", rating: "8.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "2.0", desc: "Dr. Vaseegaran resurrects his humanoid robot Chitti to battle a supernatural winged bird monster taking over cell phones.", rating: "6.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Eternal Sunshine of the Spotless Mind", desc: "When their relationship turns sour, a couple undergoes a medical procedure to erase each other from their memories.", rating: "8.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "Enthiran (Robot)", desc: "A scientist creates a humanoid robot that develops human emotions and falls in love with his creator's fiancée.", rating: "7.1 ⭐", watch: "Sun NXT" },
-    { title: "Ex Machina", desc: "A programmer is selected to participate in a ground-breaking experiment by evaluating the human qualities of a female A.I.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Cargo", desc: "A spaceship engineer is tasked with transitioning deceased human souls into their next incarnations.", rating: "5.7 ⭐", watch: "Netflix" },
-    { title: "Dune", desc: "A brilliant young noble must travel to the most dangerous planet in the universe to ensure the future of his family.", rating: "8.0 ⭐", watch: "JioCinema" },
-    { title: "Mr. India", desc: "A warm-hearted man discovers an invisibility watch created by his father and uses it to fight an evil dictator named Mogambo.", rating: "7.7 ⭐", watch: "ZEE5" },
-    { title: "Avatar", desc: "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following orders and protecting its people.", rating: "7.9 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Dasavathaaram", desc: "A bio-scientist races against time to retrieve a lethal biological weapon lost in transit, encountering 10 distinct people.", rating: "7.2 ⭐", watch: "Sun NXT" },
-    { title: "Tenet", desc: "Armed with only one word, a Protagonist fights for the survival of the world through a twilight world of international espionage.", rating: "7.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "100 Days of Love", desc: "A young romantic guy falls in love at first sight, tracking down a mysterious girl using digital technology.", rating: "6.8 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Gravity", desc: "Two astronauts work together to survive after an accident leaves them stranded in deep space with no tether to Earth.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Action Replayy", desc: "A young man uses his girlfriend's grandfather's time machine to travel back to the 1970s and fix his parents' marriage.", rating: "4.3 ⭐", watch: "YouTube" },
-    { title: "District 9", desc: "An extra-terrestrial race forced to live in slum-like conditions on Earth finds an ally in a government agent exposed to their biotechnology.", rating: "7.9 ⭐", watch: "Amazon Prime Video" },
-    { title: "Matrubhoomi", desc: "Set in a future world affected by female infanticide, a rare surviving girl is sold to a father and his five sons.", rating: "7.8 ⭐", watch: "YouTube" },
-    { title: "Minority Report", desc: "In a future where a specialized police unit arrests murderers before they commit crimes, an officer is accused of a future murder.", rating: "7.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "Love Story 2050", desc: "A young man travels forward in time to the year 2050 in futuristic Mumbai to bring his deceased lover back to life.", rating: "2.7 ⭐", watch: "YouTube" },
-    { title: "The Martian", desc: "An astronaut becomes stranded on Mars after his team assumes him dead, relying on his ingenuity to signal Earth.", rating: "8.0 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Shiva 2484", desc: "A scientist discovers an ancient cosmic artifact capable of altering quantum timelines across galaxies.", rating: "6.0 ⭐", watch: "ZEE5" },
-    { title: "Signs", desc: "A widowed former reverend living on a farm with his children discovers mysterious crop circles that signal an alien invasion.", rating: "6.8 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Antariksham 9000 KMPH", desc: "A retired astronaut is recruited back by the space agency to repair a satellite lost in orbit that threatens global communication.", rating: "6.1 ⭐", watch: "ZEE5" },
-    { title: "Her", desc: "In a near future, a lonely writer develops an unlikely, deep relationship with an operating system designed to meet his every need.", rating: "8.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Carbon", desc: "Set in 2045 Delhi, a black-market salesman navigates a dystopian future plagued by severe water and oxygen scarcity.", rating: "6.4 ⭐", watch: "YouTube" },
-    { title: "Coherence", desc: "Strange things begin happening when eight friends at a dinner party experience the troubleshooting chain reaction of a passing comet.", rating: "7.2 ⭐", watch: "Amazon Prime Video" },
-    { title: "Krrish 3", desc: "Krrish must battle a disabled evil genius named Kaal who uses mutative virus alchemy to dominate the world.", rating: "5.3 ⭐", watch: "SonyLIV" },
-    { title: "Source Code", desc: "A soldier wakes up in someone else's body, discovering he's part of a experimental government program to stop a train bomb.", rating: "7.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "JL50", desc: "A CBI officer investigates a plane crash in West Bengal, making the bizarre discovery that the flight took off 35 years ago.", rating: "7.5 ⭐", watch: "SonyLIV" },
-    { title: "Annihilation", desc: "A biologist signs up for a dangerous, secret expedition into a mysterious anomaly where nature laws don't apply.", rating: "6.8 ⭐", watch: "Netflix" },
-    { title: "Tik Tik Tik", desc: "An Indian magician and his team are recruited by the defense agency to destroy an asteroid heading toward Tamil Nadu.", rating: "6.1 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Children of Men", desc: "In 2027, in a chaotic world where women have inexplicably become infertile, a former activist agrees to protect a miraculously pregnant woman.", rating: "7.9 ⭐", watch: "Amazon Prime Video" },
-    { title: "Maanaadu", desc: "A man and a corrupt police officer get trapped in a time loop on the day of a public political rally.", rating: "8.2 ⭐", watch: "SonyLIV" },
-    { title: "Oblivion", desc: "A veteran assigned to extract Earth's remaining resources questions what he knows about his mission and his identity.", rating: "7.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Project Z", desc: "A police officer investigates a series of bizarre science experiments involving human memory modification.", rating: "5.8 ⭐", watch: "ZEE5" },
-    { title: "Everything Everywhere All at Once", desc: "A middle-aged Chinese immigrant gets swept up into an insane adventure across multiverses to save reality.", rating: "7.8 ⭐", watch: "SonyLIV" },
-    { title: "7aum Arivu", desc: "A genetic descendant of Bodhidharma attempts to reactivate his ancient martial arts skills to stop a biological weapon attack.", rating: "6.3 ⭐", watch: "Sun NXT" },
-    { title: "Edge of Tomorrow", desc: "A soldier fighting aliens gets caught in a time loop, reliving his death again and again while gaining combat mastery.", rating: "7.9 ⭐", watch: "Amazon Prime Video" },
-    { title: "Indru Netru Naalai", desc: "Two friends discover a time machine left behind by a scientist and use it to start a lucrative business.", rating: "8.0 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Contact", desc: "Dr. Ellie Arroway receives the first definitive radio signal sent from extraterrestrial intelligence, sparking political race.", rating: "7.5 ⭐", watch: "Amazon Prime Video" }
-  ],
-
-  thriller: [
-    { title: "Gone Girl", desc: "With his wife's disappearance becoming the focus of an intense media circus, a man sees the spotlight turn on him.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Kahaani", desc: "A pregnant woman's search for her missing husband in Kolkata leads her into a dangerous web of cover-ups.", rating: "8.1 ⭐", watch: "JioCinema" },
-    { title: "Shutter Island", desc: "In 1954, a U.S. Marshal investigates the disappearance of a murderer who escaped from a hospital for the criminally insane.", rating: "8.2 ⭐", watch: "Amazon Prime Video" },
-    { title: "Andhadhun", desc: "A piano player pretending to be visually impaired gets dragged into the cover-up of a high-profile murder.", rating: "8.2 ⭐", watch: "Netflix" },
-    { title: "Prisoners", desc: "When two young girls go missing, a desperate father takes matters into his own hands while a detective chases leads.", rating: "8.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Drishyam", desc: "A film-obsessed common man uses clever tricks to construct a foolproof alibi when his family commits an accidental murder.", rating: "8.2 ⭐", watch: "Disney+ Hotstar" },
-    { title: "The Silence of the Lambs", desc: "A young FBI cadet consults an incarcerated cannibalistic killer to catch another serial killer targeting women.", rating: "8.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "Talaash", desc: "An inspector coping with a personal tragedy investigates a high-profile movie star's mysterious car crash.", rating: "7.2 ⭐", watch: "Netflix" },
-    { title: "Se7en", desc: "Two homicide detectives chase a serial killer who uses the seven deadly sins as his terrifying themes.", rating: "8.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "A Wednesday!", desc: "A retiring police commissioner recalls the most challenging case of his career involving an anonymous caller and 4 terrorists.", rating: "8.1 ⭐", watch: "Netflix" },
-    { title: "Zodiac", desc: "A cartoonist becomes obsessively fixated on tracking down the Zodiac Killer who eludes San Francisco police.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Gupt: The Hidden Truth", desc: "A young man is framed for his stepfather's murder and escapes prison to track down the real assassin.", rating: "7.3 ⭐", watch: "ZEE5" },
-    { title: "Black Swan", desc: "A committed dancer wins the lead role in Swan Lake, but her sanity slips as she encounters a dark rival.", rating: "8.0 ⭐", watch: "Amazon Prime Video" },
-    { title: "Ek Hasina Thi", desc: "A woman framed for terrorism by her charming lover transforms into a ruthless mastermind to seek revenge.", rating: "7.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "The Prestige", desc: "Two rival magicians in 1890s London engage in a bitter obsession to create the ultimate teleportation illusion.", rating: "8.5 ⭐", watch: "Amazon Prime Video" },
-    { title: "Badla", desc: "A young businesswoman finds herself locked in a hotel room with her dead lover and hires a legendary lawyer.", rating: "7.7 ⭐", watch: "Netflix" },
-    { title: "The Sixth Sense", desc: "A child psychologist tries to help a young boy who communicates with spirits who don't know they are dead.", rating: "8.2 ⭐", watch: "Disney+ Hotstar" },
-    { title: "NH10", desc: "A couple's road trip turns into a terrifying fight for survival when they witness an honor killing by local thugs.", rating: "7.2 ⭐", watch: "Eros Now" },
-    { title: "Memento", desc: "A man with short-term memory loss uses polaroid photos and tattoos to track down his wife's murderer.", rating: "8.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "Ratsasan", desc: "An aspiring film director turned police officer tracks down a ruthless serial killer targeting schoolgirls.", rating: "8.3 ⭐", watch: "Disney+ Hotstar" },
-    { title: "Oldboy", desc: "After being kidnapped and imprisoned for 15 years for no reason, a man is suddenly released and given 5 days to find his captor.", rating: "8.4 ⭐", watch: "Amazon Prime Video" },
-    { title: "Special 26", desc: "A group of conmen fake official CBI raids to rob corrupt politicians and rich businessmen.", rating: "8.0 ⭐", watch: "JioCinema" },
-    { title: "Knives Out", desc: "A detective investigates the death of a wealthy patriarch of an eccentric, combative family.", rating: "7.9 ⭐", watch: "Amazon Prime Video" },
-    { title: "Kartik Calling Kartik", desc: "An introverted man begins getting phone calls every morning from someone claiming to be himself.", rating: "7.1 ⭐", watch: "Netflix" },
-    { title: "Parasite", desc: "A destitute family schemes to get hired by a wealthy family, leading to an explosive fallout.", rating: "8.5 ⭐", watch: "SonyLIV" },
-    { title: "Table No. 21", desc: "A couple wins a trip to Fiji and agrees to play a live game show, realizing the tasks carry deadly consequences.", rating: "7.2 ⭐", watch: "Eros Now" },
-    { title: "Get Out", desc: "A man visiting his girlfriend's parents notices strange behavior among the estate's staff and guests.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Manorama Six Feet Under", desc: "A amateur detective in a Rajasthan town accepts a job to spy on a politician, unraveling a dark web.", rating: "7.5 ⭐", watch: "Netflix" },
-    { title: "Nightcrawler", desc: "A driven man enters the underground world of L.A. freelance crime journalism, recording accidents and murders.", rating: "7.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Ugly", desc: "A struggling actor's daughter goes missing, leading to allegations, greed, and dark secrets among her family.", rating: "7.9 ⭐", watch: "ZEE5" },
-    { title: "Sicario", desc: "An idealistic FBI agent is recruited into a government task force fighting escalating drug cartel violence.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "404: Error Not Found", desc: "A medical student moves into a room rumored to be haunted, attempting to scientifically prove hallucination.", rating: "7.3 ⭐", watch: "YouTube" },
-    { title: "The Game", desc: "A wealthy banker receives a mysterious gift from his brother—a real-life game that consumes his reality.", rating: "7.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Game Over", desc: "A woman suffering from nyctophobia must defend her home when serial intruders break in.", rating: "7.0 ⭐", watch: "Netflix" },
-    { title: "Misery", desc: "After a famous author crashes his car, he is rescued by his 'number one fan' who holds him hostage.", rating: "7.8 ⭐", watch: "Amazon Prime Video" },
-    { title: "Anek", desc: "An undercover cop navigates political and militant instability in Northeast India to bring about peace.", rating: "6.5 ⭐", watch: "Netflix" },
-    { title: "Uncut Gems", desc: "A charismatic New York City jeweler makes a high-stakes bet that could lead to the windfall of a lifetime.", rating: "7.4 ⭐", watch: "Netflix" },
-    { title: "Hate Story", desc: "A woman betrayed by a ruthless tycoon uses her charm to systematically destroy his business empire.", rating: "5.3 ⭐", watch: "ZEE5" },
-    { title: "Searching", desc: "After his 16-year-old daughter vanishes, a desperate father breaks into her laptop to trace her digital footprint.", rating: "7.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "Darr", desc: "A man's obsessive love for his college classmate turns into a dangerous, deadly stalker nightmare.", rating: "7.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "The Invisible Man", desc: "When an abusive ex-boyfriend dies by suicide, a woman suspects his death was a hoax and he's hunting her invisibly.", rating: "7.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Baazigar", desc: "A vengeful young man assumes double identities to destroy a wealthy businessman who ruined his father.", rating: "7.6 ⭐", watch: "Amazon Prime Video" },
-    { title: "Identity", desc: "Ten strangers stranded at a remote Nevada motel during a storm are murdered one by one.", rating: "7.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "Race", desc: "Two stepbrothers compete in a dangerous game of betrayal, insurance fraud, and murder.", rating: "6.7 ⭐", watch: "Netflix" },
-    { title: "Don't Breathe", desc: "Thievery goes wrong when three burglars break into the house of a blind military veteran.", rating: "7.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Bluffmaster!", desc: "A professional conman discovers he has brain cancer and decides to teach his apprentice one final heist.", rating: "7.3 ⭐", watch: "Amazon Prime Video" },
-    { title: "Run", desc: "A homeschooled teenager begins to suspect her mother is hiding a dark secret from her regarding her illness.", rating: "6.7 ⭐", watch: "Amazon Prime Video" },
-    { title: "Te3n", desc: "A grandfather, a police officer, and a priest seek justice for a kidnapping case that mirrors an old unsolved crime.", rating: "6.6 ⭐", watch: "Netflix" },
-    { title: "Missing", desc: "A daughter uses online tools and digital footprint tracing to search for her mother who disappeared on vacation.", rating: "7.1 ⭐", watch: "Amazon Prime Video" },
-    { title: "Aamir", desc: "A doctor returning to Mumbai is handed a cellphone by terrorists and forced to carry out bizarre orders across the city.", rating: "7.7 ⭐", watch: "YouTube" }
+    { title: "Ferris Bueller's Day Off", desc: "A high school wise-guy fakes an illness to spend a glorious day off in Chicago with his friends.", rating: "7.8 ⭐", watch: "Amazon Prime Video" }
   ]
 };
 
+// Function to select and render a random movie from the chosen genre
 function pickMovie(genre) {
-  const display = document.getElementById('movie-display');
-  const movies = movieData[genre];
-
-  if (!movies || movies.length === 0) return;
-
-  // Play shuffle sound
-  shuffleSound.currentTime = 0;
-  shuffleSound.play().catch(err => console.log("Audio playback allowed on interaction:", err));
-
-  let counter = 0;
-  const maxShuffles = 15;
+  const genreList = movieData[genre];
   
-  // Cycle titles during shuffle phase
-  const interval = setInterval(() => {
-    const randomIndex = Math.floor(Math.random() * movies.length);
-    display.innerHTML = `<h2 style="font-size: 1.8rem; color: #93c5fd;">${movies[randomIndex].title}</h2>`;
-    counter++;
+  if (!genreList || genreList.length === 0) return;
 
-    if (counter >= maxShuffles) {
-      clearInterval(interval);
-      
-      // Select random final movie object
-      const finalPick = movies[Math.floor(Math.random() * movies.length)];
+  // Play audio safely
+  shuffleSound.currentTime = 0;
+  shuffleSound.play().catch(() => {});
 
-      // Render movie card details
-      display.innerHTML = `
-        <div class="result-card">
-          <span class="badge">Your CinePick</span>
-          <h2>${finalPick.title}</h2>
-          <div class="meta-info">
-            <span class="rating">${finalPick.rating}</span>
-            <span class="platform">📺 Watch on: <strong>${finalPick.watch}</strong></span>
-          </div>
-          <p class="description">${finalPick.desc}</p>
-        </div>
-      `;
+  // Pick random movie
+  const randomIndex = Math.floor(Math.random() * genreList.length);
+  const movie = genreList[randomIndex];
 
-      // Play victory sound & fire confetti
-      beepSound.currentTime = 0;
-      beepSound.play().catch(err => console.log("Beep audio error:", err));
-
-      if (typeof confetti === 'function') {
-        confetti({
-          particleCount: 100,
-          spread: 80,
-          origin: { y: 0.6 }
-        });
-      }
-    }
-  }, 90);
+  // Render properties directly to DOM
+  document.getElementById('movie-title').textContent = movie.title;
+  document.getElementById('movie-desc').textContent = movie.desc;
+  document.getElementById('movie-rating').textContent = movie.rating;
+  document.getElementById('movie-watch').textContent = `Available on: ${movie.watch}`;
 }
