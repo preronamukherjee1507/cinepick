@@ -1,27 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Picker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CinePick - Movie Randomizer</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
+  <div class="background-overlay"></div>
 
-  <!-- Genre Selection Buttons -->
-  <div class="genre-buttons">
-    <button onclick="pickMovie('romcom')">Rom-Com</button>
-    <button onclick="pickMovie('crime')">Crime</button>
-    <button onclick="pickMovie('action')">Action</button>
-    <button onclick="pickMovie('comedy')">Comedy</button>
-  </div>
+  <!-- Audio Element (Make sure beep.mp3 is in your root directory on GitHub) -->
+  <audio id="beepSound" src="beep.mp3" preload="auto"></audio>
 
-  <!-- Movie Result Card -->
-  <div id="movie-card">
-    <h2 id="movie-title">Pick a genre above!</h2>
-    <span id="movie-rating"></span>
-    <p id="movie-desc"></p>
-    <p id="movie-watch"></p>
-  </div>
+  <main class="container">
+    <!-- Selection Screen -->
+    <section id="selectionScreen" class="screen active">
+      <header class="main-header">
+        <h1>Choose a genre</h1>
+        <p class="subtitle">Pick a bubble to roll for your next watch</p>
+      </header>
+      
+      <div class="bubbles-grid" id="bubblesGrid">
+        <!-- 8 Genre Bubbles generated dynamically -->
+      </div>
+    </section>
+
+    <!-- Shuffling Screen -->
+    <section id="shufflingScreen" class="screen hidden">
+      <div class="shuffle-box">
+        <p class="shuffle-status">Finding your next movie...</p>
+        <div class="shuffle-display" id="shuffleDisplay">---</div>
+      </div>
+    </section>
+
+    <!-- Result Screen -->
+    <section id="resultScreen" class="screen hidden">
+      <div class="result-card">
+        <div class="badge-row">
+          <span class="badge genre-badge" id="resGenre">Genre</span>
+          <span class="badge industry-badge" id="resIndustry">Industry</span>
+        </div>
+        <h2 id="resTitle" class="movie-title">Movie Title</h2>
+        
+        <div class="meta-info">
+          <div class="meta-item">
+            <span class="meta-label">⭐ Rating:</span>
+            <span id="resRating" class="meta-value">--/10</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">📺 Where to Watch:</span>
+            <span id="resWatch" class="meta-value">--</span>
+          </div>
+        </div>
+
+        <p id="resDesc" class="movie-desc">Description goes here.</p>
+
+        <button id="pickAgainBtn" class="btn-primary">Pick Another Movie</button>
+      </div>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
